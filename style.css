@@ -12,6 +12,10 @@ body {
   /* Ensures that content within the body can span the entire screen wdith/height */
   margin: 0px;
 }
+
+section {
+  flex-direction: column;
+}
   
 .main-view {
   display: flex;
@@ -20,6 +24,7 @@ body {
   
 .title {
   border-bottom: 2px solid #000;
+  flex: 1;
 }
   
 .title > h1 {
@@ -27,8 +32,8 @@ body {
   font-size: 1.5rem;
 }
 
-section {
-  flex-direction: column;
+.content {
+  flex: 40;
 }
 
 @media screen and (min-width: 1800px) {
@@ -149,10 +154,24 @@ a:hover {
 
 /* hide menu by default */
 #dropdown-menu {
-  display: none;
-  min-height: max(calc(var(--min-display-height) / 2), 100vh);
-  min-width: calc(var(--min-display-width) / 2);
   background-color: #000;
+}
+
+.hide {
+  height: 0px;
+  width: 0px;
+  overflow: hidden;
+}
+
+.show {
+  min-height: max(calc(var(--min-display-height) / 2), 100vh);
+  height: auto;
+  width: max(100vw, calc(var(--min-display-width) / 2));
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
 }
 
 #close-placeholder {
@@ -276,6 +295,32 @@ a:hover {
   width: max(10vh, 10px);
   background-image: url("vectors/arrow.svg");
   background-repeat: no-repeat;
+}
+
+/* WORKS */
+#projects {
+  display: flex;
+}
+
+.project {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.project-name {
+  flex: 1;
+  min-width: 200px;
+  min-height: 200px;
+  text-align: center;
+  border: 1px solid #000;
+}
+
+.project-description {
+  flex: 2;
+  min-width: 200px;
+  min-height: 200px;
+  padding-left: 20px;
 }
 
 /* FOOTER */
