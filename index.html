@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Lin Wei">
+    <meta name="description" content="Lin Wei's portfolio">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lin Wei</title>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!--FOR ICONS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!--NAV BAR-->
+    <nav class="main-view">
+      <div id="menu-icon" class="button"><i class="fas fa-bars fa-2x"></i></div>
+      <ul id="nav-content">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#works">Works</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div id="logo-placeholder">
+        <!--PLACEHOLDER-->
+        <a href="#home"><div class="button" id="logo"></div></a>
+      </div>
+    </nav>
+
+    <!--DROPDOWN MENU-->
+    <div id="dropdown-menu">
+      <div id="close-placeholder">
+        <!--CLOSE BUTTON-->
+        <div id="close-button" class="button">
+        </div>
+      </div>
+      <ul id="dropdown-menu-content">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#works">Works</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <!--HOME-->
+    <section id="home" class="main-view full-width full-height">
+      <div id="home-placeholder">
+        <h1 id="greeting">Hi there!</h1>
+        <div id="home-description">
+          <p>I am Lin Wei.</p>
+          <!--TODO: include action verbs and animate it using js-->
+          <p>I <span class="action">create elegant solutions for humans,</span>
+            <span class="action">realise ideas with code,</span>
+            <span class="action">aspire to create art with math.</span>
+          </p>
+        </div>
+      </div>
+      <div id="arrow-placeholder">
+        <a href="#works"><div id="arrow" class="button"></div></a>
+      </div>
+    </section>
+
+    <!--FEATURED WORKS-->
+    <section id="works" class="main-view full-width full-height">
+      <div class="title">
+        <h1>Featured Works</h1>
+      </div>
+      <!--TODO: Add all projects to container-->
+      <div id="projects"/>
+    </section>
+
+    <!--ABOUT ME-->
+    <section id="about" class="main-view full-width full-height">
+      <div class="title">
+        <h1>About</h1>
+      </div>
+      <div>
+        <p>Some text about me.</p>
+      </div>
+    </section>
+
+    <!--CONTACT-->
+    <section id="contact" class="main-view full-width full-height">
+      <div class="title">
+        <h1>Contact</h1>
+      </div>
+      <div>
+        <form action="/submit_comment" method="post">
+          <label for="comment">Comment:</label>
+          <input type="text" name="comment"/>
+          <input type="submit" value="Submit"/>
+        </form>
+        <h2>Comments: </h2>
+        <ul id="comment-placeholder"></ul>
+      </div>
+      <!--TODO: add comment section here (in week 2)-->
+    </section>
+
+    <!--FOOTER-->
+    <footer class="main-view full-width">
+      <p>© Copyright 2020 Poh Lin Wei. All rights reserved.</p>
+    </footer>
+  </body>
+</html>  
