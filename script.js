@@ -27,8 +27,15 @@ function ensureNonNull(... elements) {
     isNull = element === null;
 
     if (isEmpty || isNull) {
-      throw new Error("Missing desired element");
+      throw new Error('Missing desired element');
     }
+  }
+}
+
+/** Ensures that the element has the stated class. */
+function ensureHasClass(element, statedClass) {
+  if (!element.classList.contains(statedClass)) {
+    throw new Error(`Element does not have ${statedClass} class`);
   }
 }
 
@@ -42,7 +49,10 @@ try {
 
 // Hides dropdown menu and shows main view elements.
 const hideMenuShowMain = () => {
-  dropdownMenu.style.display = 'none';
+  ensureHasClass(dropdownMenu, 'show');
+  dropdownMenu.classList.remove('show');
+  dropdownMenu.classList.add('hide');
+
   for (let mainView of mainViews) {
     mainView.style.display = 'flex';
   }
@@ -50,10 +60,13 @@ const hideMenuShowMain = () => {
 
 // Hides main view elements and shows dropdown menu.
 const hideMainShowMenu = () => {
+  ensureHasClass(dropdownMenu, 'hide');
+  dropdownMenu.classList.remove('hide');
+  dropdownMenu.classList.add('show');
+  
   for (let mainView of mainViews) {
     mainView.style.display = 'none';
   }
-  dropdownMenu.style.display = 'block';
 }
 
 /**

@@ -29,7 +29,7 @@
     </nav>
 
     <!--DROPDOWN MENU-->
-    <div id="dropdown-menu">
+    <div id="dropdown-menu" class="hide">
       <div id="close-placeholder">
         <!--CLOSE BUTTON-->
         <div id="close-button" class="button">
@@ -67,7 +67,12 @@
         <h1>Featured Works</h1>
       </div>
       <!--TODO: Add all projects to container-->
-      <div id="projects"/>
+      <div id="projects" class="content">
+        <div class="project">
+          <div class="project-name">Test</div>
+          <div class="project-description">Lorem ipsum.</div>
+        </div>
+      </div>
     </section>
 
     <!--ABOUT ME-->
@@ -75,7 +80,7 @@
       <div class="title">
         <h1>About</h1>
       </div>
-      <div>
+      <div class="content">
         <p>Some text about me.</p>
       </div>
     </section>
@@ -85,7 +90,7 @@
       <div class="title">
         <h1>Contact</h1>
       </div>
-      <div>
+      <div class="content">
         <form action="/submit_comment" method="post">
           <label for="comment">Comment:</label>
           <input type="text" name="comment"/>
