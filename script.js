@@ -49,9 +49,9 @@ try {
 
 // Hides dropdown menu and shows main view elements.
 const hideMenuShowMain = () => {
-  ensureHasClass(dropdownMenu, 'show');
-  dropdownMenu.classList.remove('show');
-  dropdownMenu.classList.add('hide');
+  ensureHasClass(dropdownMenu, 'show-menu');
+  dropdownMenu.classList.remove('show-menu');
+  dropdownMenu.classList.add('hide-menu');
 
   for (let mainView of mainViews) {
     mainView.style.display = 'flex';
@@ -60,9 +60,9 @@ const hideMenuShowMain = () => {
 
 // Hides main view elements and shows dropdown menu.
 const hideMainShowMenu = () => {
-  ensureHasClass(dropdownMenu, 'hide');
-  dropdownMenu.classList.remove('hide');
-  dropdownMenu.classList.add('show');
+  ensureHasClass(dropdownMenu, 'hide-menu');
+  dropdownMenu.classList.remove('hide-menu');
+  dropdownMenu.classList.add('show-menu');
   
   for (let mainView of mainViews) {
     mainView.style.display = 'none';
