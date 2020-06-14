@@ -302,25 +302,45 @@ a:hover {
   display: flex;
 }
 
+#left-button, #right-button {
+  flex: 1;
+  align-self: center;
+}
+
 .project {
+  flex: 20;
+  padding: 20px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.project-name-placeholder {
+  flex: 1;
+  margin: 1vh 1vw;
 }
 
 .project-name {
-  flex: 1;
-  min-width: 200px;
-  min-height: 200px;
-  text-align: center;
+  margin: auto;
+  height: max(50vmin, 150px);
+  width: max(50vmin, 150px);
   border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .project-description {
-  flex: 2;
-  min-width: 200px;
-  min-height: 200px;
-  padding-left: 20px;
+  flex: 1;
+  margin: 3vh 0px;
+}
+
+@media screen and (orientation: portrait) {
+  .project {
+    flex-direction: column;
+    align-self: center;
+  }
 }
 
 /* FOOTER */
