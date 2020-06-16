@@ -271,7 +271,7 @@ a:hover {
 }
 
 #home-description {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-size: 1.5rem;
 }
 
@@ -302,25 +302,81 @@ a:hover {
   display: flex;
 }
 
+#left-button, #right-button {
+  flex: 1;
+  align-self: center;
+}
+
 .project {
+  flex: 20;
+  padding: 20px;
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+}
+
+.project-name-placeholder {
+  flex: 1;
+  margin: 1vh 1vw;
+  align-self: center;
 }
 
 .project-name {
-  flex: 1;
-  min-width: 200px;
-  min-height: 200px;
-  text-align: center;
+  margin: auto;
+  height: max(50vmin, 150px);
+  width: max(50vmin, 150px);
   border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-details-placeholder {
+  flex: 1;
+  margin: 3vh 0px;
+  align-self: center;
+}
+
+@media screen and (orientation: portrait) {
+  .project {
+    flex-direction: column;
+    align-self: center;
+    padding: max(20px, 7vw);
+  }
+
+  .project-details-placeholder {
+    align-self: flex-start;
+  }
+}
+
+.project-name > h1 {
+  font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+  font-size: 2.5rem;
+}
+
+.project-details-placeholder > p {
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .project-description {
-  flex: 2;
-  min-width: 200px;
-  min-height: 200px;
-  padding-left: 20px;
+  font-size: 1rem;
+}
+
+.project-tools, .project-date {
+  font-size: 0.7rem;
+}
+
+.more-button {
+  width: 5rem;
+  height: 2rem;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.more-button > p {
+  text-align: center;
+  font-size: 1rem;
+  color: #fff;
 }
 
 /* FOOTER */
