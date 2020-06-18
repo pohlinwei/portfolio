@@ -320,8 +320,8 @@ a:hover {
 
 .project-image-placeholder {
   margin: auto;
-  height: max(50vmin, 150px);
-  width: max(50vmin, 150px);
+  height: max(50vmin, 250px);
+  width: max(50vmin, 250px);
   border: 1px solid #000;
   display: flex;
   justify-content: center;
@@ -375,7 +375,7 @@ a:hover {
   justify-content: center;
 }
 
-.more-button > p {
+.more-button > a {
   text-align: center;
   font-size: 1rem;
   color: #fff;
