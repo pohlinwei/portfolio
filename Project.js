@@ -1,7 +1,7 @@
 /** Represents a project in 'Featured Works' of the main page. */
 class Project {
-  constructor(name, image, description, tools, date, projectPageLink) {
-    ensureNonNull(name, description, tools, date, projectPageLink);
+  constructor(name, image, description, tools, date, page) {
+    ensureNonNull(name, description, tools, date, page);
 
     const div = document.createElement('div');
     const divClasses = ['project', 'hide-project'];
@@ -16,7 +16,7 @@ class Project {
                           <p class="project-description">${description}</p>
                           <p class="project-tools">Made a reality with: ${tools}</p>
                           <p class="project-date">Done: ${date}</p>
-                          <div class="button more-button"><a href="${projectPageLink}">More >></a></div>
+                          <div class="button more-button"><a href="${page}">More >></a></div>
                         </div>`;   
     div.innerHTML = divContent;
     
@@ -74,5 +74,9 @@ class Project {
     }
 
     throw new Error('Placeholder for project image cannot be found');
+  }
+
+  get div(){
+    return this.projectCondensed;
   }
 }

@@ -37,7 +37,9 @@ class PageCreator:
 
     def get_screenshots_html(self, screenshots_path, name):
         screenshots_dir = Path(screenshots_path)
-        screenshots = [screenshots_path + '/' + screenshot for screenshot in listdir(screenshots_dir)]
+        print(listdir(screenshots_dir))
+        screenshots = [screenshots_path + '/' + screenshot for screenshot in listdir(screenshots_dir)
+                        if screenshot.endswith(('.jpg', '.png'))]
         screenshot_pairs = ScreenshotPair.get_pairs(screenshots)
 
         image_template = PageCreator.IMG_TEMPLATE.read_text()
