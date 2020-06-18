@@ -27,5 +27,5 @@ const toProject = (project_json) => {
   const tools = project_json.tools;
   const date = project_json.date;
   const page = project_json.page;
-  return Project(name, image, description, tools, date, page);
+  return new Project(name, image, description, tools, date, page);
 }
