@@ -152,18 +152,17 @@ a:hover {
   cursor: pointer;
 }
 
-/* hide menu by default */
 #dropdown-menu {
   background-color: #000;
 }
 
-.hide {
+.hide-menu {
   height: 0px;
   width: 0px;
   overflow: hidden;
 }
 
-.show {
+.show-menu {
   min-height: max(calc(var(--min-display-height) / 2), 100vh);
   height: auto;
   width: max(100vw, calc(var(--min-display-width) / 2));
@@ -265,14 +264,14 @@ a:hover {
 #greeting {
   display: flex;
   align-items: center;
-  font-size: 7rem;
+  font-size: 6.5rem;
   font-family: 'Playfair Display', 'Times New Roman', Times, serif;
   margin: 50px 0px max(5%, 20px) 0px;
 }
 
 #home-description {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .action {
@@ -319,7 +318,7 @@ a:hover {
   align-self: center;
 }
 
-.project-name {
+.project-image-placeholder {
   margin: auto;
   height: max(50vmin, 150px);
   width: max(50vmin, 150px);
@@ -327,6 +326,9 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: cover; 
 }
 
 .project-details-placeholder {
@@ -347,7 +349,7 @@ a:hover {
   }
 }
 
-.project-name > h1 {
+.project-name {
   font-family: 'Playfair Display', 'Times New Roman', Times, serif;
   font-size: 2.5rem;
 }
