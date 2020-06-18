@@ -318,7 +318,7 @@ a:hover {
   align-self: center;
 }
 
-.project-name {
+.project-image-placeholder {
   margin: auto;
   height: max(50vmin, 150px);
   width: max(50vmin, 150px);
@@ -326,6 +326,9 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: cover; 
 }
 
 .project-details-placeholder {
@@ -346,7 +349,7 @@ a:hover {
   }
 }
 
-.project-name > h1 {
+.project-name {
   font-family: 'Playfair Display', 'Times New Roman', Times, serif;
   font-size: 2.5rem;
 }
