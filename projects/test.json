@@ -1,0 +1,13 @@
+[
+    {
+        "__project__": true,
+        "name": "Zeitraum",
+        "image": "",
+        "description": "Lorem ipsum.",
+        "tools": "blah",
+        "date": "dec",
+        "page": "projects/zeitraum.html",
+        "screenshots": "zeitraum",
+        "github": ""
+    }
+]
