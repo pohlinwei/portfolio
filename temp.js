@@ -8,7 +8,7 @@ const setupProjects = (projects_json) => {
   const projectsPlaceholder = document.getElementById('projects');
   const leftButton = '<div id="left-button" class="button"><i class="fas fa-chevron-circle-left fa-lg"></i></div>';
   const projects = toProjects(projects_json);
-  const projectDivs = projects.map(project => project.div());
+  const projectDivs = projects.map(project => project.div);
   const projectsHTML = projectDivs.map(projectDiv => projectDiv.outerHTML)
                                   .join('');
   const rightButton = '<div id="right-button" class="button"><i class="fas fa-chevron-circle-right fa-lg"></i></div>';
