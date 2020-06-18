@@ -320,8 +320,8 @@ a:hover {
 
 .project-image-placeholder {
   margin: auto;
-  height: max(50vmin, 250px);
-  width: max(50vmin, 250px);
+  height: max(50vmin, 200px);
+  width: max(50vmin, 200px);
   border: 1px solid #000;
   display: flex;
   justify-content: center;
@@ -359,11 +359,11 @@ a:hover {
 }
 
 .project-description {
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .project-tools, .project-date {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
 }
 
 .more-button {
@@ -377,8 +377,12 @@ a:hover {
 
 .more-button > a {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #fff;
+}
+
+.more-button > a:hover {
+  font-style: normal;
 }
 
 /* FOOTER */
