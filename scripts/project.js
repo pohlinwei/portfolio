@@ -24,35 +24,6 @@ class Project {
     this.projectCondensed = div;
   }
 
-  /** Ensures that the given arguments are not null. */
-  ensureNonNull(...args) {
-    hasError = false;
-    errorType = '';
-
-    for (arg of args) {
-      if (arg === null) {
-        errorType = 'Null value';
-      } else if (typeof arg === 'string' && arg === '') {
-        errorType = 'Empty string';
-      } else if (typeof arg === 'number' && arg === NaN) {
-        errorType = 'Invalid number';
-      } else if (Array.isArray(arg) && arg.length === 0) {
-        errorType = 'Empty array'
-      } else {
-        // arg is valid
-      }
-
-      if (errorType !== '') {
-        hasError = true;
-        break;
-      }
-    }
-
-    if (hasError) {
-      throw new Error(`Missing project attribute. ${errorType}.`);
-    }
-  }
-
   addProjectImage(element, image) {
     if (image === '') {
       return; // no representative image to add
