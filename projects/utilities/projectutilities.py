@@ -36,3 +36,6 @@ def create_dir(dir_path):
     directory = Path(dir_path)
     if not directory.exists():
         directory.mkdir(parents=True)
+
+def remove_file_ext(file_path):
+    return ''.join(file_path.split('.')[:-1])
