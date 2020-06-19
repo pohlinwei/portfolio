@@ -14,7 +14,7 @@ class Project {
                         </div>
                         <div class="project-details-placeholder">
                           <p class="project-description">${description}</p>
-                          <p class="project-tools">Made a reality with: ${tools}</p>
+                          <p class="project-tools">Made with: ${tools}</p>
                           <p class="project-date">Done: ${date}</p>
                           <div class="button more-button"><a href="${page}">More >></a></div>
                         </div>`;   
