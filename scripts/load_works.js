@@ -3,6 +3,7 @@ const parentDir = 'https://pohlinwei.github.io/portfolio/';
 fetch(parentDir + 'projects/test.json')
     .then(response => response.json())
     .then(projects_json => setupProjects(projects_json))
+    .catch((error) => console.error('Error:', error));
 
 const setupProjects = (projects_json) => {
   const projectsPlaceholder = document.getElementById('projects');
