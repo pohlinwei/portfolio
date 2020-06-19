@@ -1,18 +1,43 @@
 /**
- * Ensures that the stated elements are present. Note that elements maybe an
- * HTMLCollection, NodeList or an HTML element. Hence, the stated elements are considered
- * to be present if all HTMLCollection and NodeList have length > 0 and all HTML elements
- * are non-null.
- * @param {...(NodeList | HTMLCollection | HTML element)} elements Elements to be checked.
+ * Ensures that the stated arguments are present. 
+ * @param {...(NodeList|HTMLCollection|HTML element|string|Array)} args
+ *    Arguments to be checked.
  */
-function ensureNonNull(... elements) {
-  for (element of elements) {
-    isEmpty = (element instanceof HTMLCollection || element instanceof NodeList) &&
-      element.length === 0;
-    isNull = element === null;
+function ensureNonNull(... args) {
+  /**
+   * Indicates error type.
+   * @enum {string}
+   */
+  const ErrorType = {
+    NULL_VALUE: 'Null value',
+    EMPTY_STR: 'Empty string',
+    EMPTY_COLL_OR_LIST: 'Empty HTMLCollection/NodeList',
+    EMPTY_ARR: 'Empty array'
+  };
 
-    console.assert(!isEmpty && !isNull, 'Missing desired element');
+  let hasError = false;
+  /** @type {ErrorType} The type of error, if any. */
+  let err = null;
+
+  for (arg of args) {
+    if (arg === null) {
+      err = ErrorType.NULL_VALUE;
+    } else if (typeof arg === 'string' && arg === '') {
+      err = ErrorType.EMPTY_STR;
+    } else if ((arg instanceof HTMLCollection || arg instanceof NodeList) &&
+        arg.length === 0) {
+          err= ErrorType.EMPTY_COLL_OR_LIST;
+    } else if (Array.isArray(arg) && arg.length === 0) {
+      err = ErrorType.EMPTY_ARR;
+    }
+
+    hasError = err !== null;
+    if (hasError) {
+      break;
+    }
   }
+
+  console.assert(!hasError, `Missing desired element: ${err}`);
 }
 
 /** Ensures that the element has the stated class. */
