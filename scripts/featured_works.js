@@ -1,6 +1,6 @@
 const parentDir = 'https://pohlinwei.github.io/portfolio/';
 
-fetch(parentDir + 'projects/test.json')
+fetch(parentDir + 'projects/projects.json')
     .then(response => response.json())
     .then(projects_json => setupWorkSection(projects_json))
     .catch(err => console.error(err));
