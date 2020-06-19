@@ -1,3 +1,5 @@
+from .projectutilities import remove_file_ext
+
 class ScreenshotPair:
     def __init__(self, reg_shot, small_shot):
         self.small_shot = small_shot
@@ -16,8 +18,8 @@ class ScreenshotPair:
             
             curr_shot = shots[i]
             next_shot = shots[i + 1]
-            curr_shot_id = curr_shot.split('_')[0]
-            next_shot_id = next_shot.split('_')[0]
+            curr_shot_id = remove_file_ext(curr_shot).split('_')[0]
+            next_shot_id = remove_file_ext(next_shot).split('_')[0]
 
             if curr_shot_id == next_shot_id:
                 pairs.append(ScreenshotPair(curr_shot, next_shot[i + 1]))
