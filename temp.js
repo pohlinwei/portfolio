@@ -1,16 +1,18 @@
 const parentDir = 'https://pohlinwei.github.io/portfolio/';
 
 fetch(parentDir + 'projects/test.json')
-  .then(response => response.json())
-  .then(projects_json => setupProjects(projects_json))
+    .then(response => response.json())
+    .then(projects_json => setupProjects(projects_json))
 
 const setupProjects = (projects_json) => {
   const projectsPlaceholder = document.getElementById('projects');
+  ensureNonNull(projectsPlaceholder);
+
   const leftButton = '<div id="left-button" class="button"><i class="fas fa-chevron-circle-left fa-lg"></i></div>';
   const projects = toProjects(projects_json);
   const projectDivs = projects.map(project => project.div);
   const projectsHTML = projectDivs.map(projectDiv => projectDiv.outerHTML)
-                                  .join('');
+                          .join('');
   const rightButton = '<div id="right-button" class="button"><i class="fas fa-chevron-circle-right fa-lg"></i></div>';
   projectsPlaceholder.innerHTML = leftButton + projectsHTML + rightButton;
 }

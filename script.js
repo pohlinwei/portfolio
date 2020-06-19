@@ -4,7 +4,6 @@
  * to be present if all HTMLCollection and NodeList have length > 0 and all HTML elements
  * are non-null.
  * @param {...(NodeList | HTMLCollection | HTML element)} elements Elements to be checked.
- * @throws Will throw if one of the elements is deemed to be not present
  */
 function ensureNonNull(... elements) {
   for (element of elements) {
@@ -12,9 +11,7 @@ function ensureNonNull(... elements) {
       element.length === 0;
     isNull = element === null;
 
-    if (isEmpty || isNull) {
-      throw new Error('Missing desired element');
-    }
+    console.assert(!isEmpty && !isNull, 'Missing desired element');
   }
 }
 
@@ -24,98 +21,3 @@ function ensureHasClass(element, statedClass) {
     throw new Error(`Element does not have ${statedClass} class`);
   }
 }
-
-const mainViews = document.getElementsByClassName('main-view');
-const dropdownMenu = document.getElementById('dropdown-menu');
-try {
-  ensureNonNull(mainViews, dropdownMenu);
-} catch (err) {
-  console.error(err);
-}
-
-// Hides dropdown menu and shows main view elements.
-const hideMenuShowMain = () => {
-  ensureHasClass(dropdownMenu, 'show-menu');
-  dropdownMenu.classList.remove('show-menu');
-  dropdownMenu.classList.add('hide-menu');
-
-  for (let mainView of mainViews) {
-    mainView.style.display = 'flex';
-  }
-}
-
-// Hides main view elements and shows dropdown menu.
-const hideMainShowMenu = () => {
-  ensureHasClass(dropdownMenu, 'hide-menu');
-  dropdownMenu.classList.remove('hide-menu');
-  dropdownMenu.classList.add('show-menu');
-  
-  for (let mainView of mainViews) {
-    mainView.style.display = 'none';
-  }
-}
-
-/**
- * Adds listener to dropdown menu, elements that belong to main view 
- * and elements in the dropdown menu to enable the user to toggle between them. 
- * To view the dropdown menu, the user has to click on the menu icon.
- * To view the main view after opening the dropdown, the user has to click close
- * or select an element in the dropdown menu.
- */
-const setupToggleMainAndMenu = () => {
-  const closeButton = document.getElementById('close-button');
-  try {
-    ensureNonNull(closeButton);
-  } catch (err) {
-    console.error(err);
-  }
-  closeButton.onclick = hideMenuShowMain;
-
-  const menuIcon = document.getElementById('menu-icon');
-  try {
-    ensureNonNull(menuIcon);
-  } catch (err) {
-    console.error(err);
-  }
-  menuIcon.onclick = hideMainShowMenu;
-
-  const dropdownMenuContent = document.getElementById('dropdown-menu-content');
-  try {
-    ensureNonNull(dropdownMenuContent);
-  } catch (err) {
-    console.error(err);
-  }
-  
-  const dropdownElements = dropdownMenuContent.children;
-  for (let dropdownElement of dropdownElements) {
-    // hides dropdown menu and redirects user to relevant section
-    dropdownElement.onclick = hideMenuShowMain;
-  }
-}
-
-setupToggleMainAndMenu();
-
-/**
- * Sets up animation of actions by displaying them like a slideshow.
- * Specifically, we make the current action invisible and the next action
- * visible after every 2s.
- */
-const setupActionAnimation = () => {
-  const actions = document.getElementsByClassName('action');
-  try {
-    ensureNonNull(actions);
-  } catch (err) {
-    console.error(err);
-  }
-  let currAction = 0; // indicates the action which is currently shown
-  const actionsAnimate = () => {
-    const nextAction = (currAction + 1) % actions.length;
-    actions[currAction].style.display = 'none';
-    actions[nextAction].style.display = 'inline';
-    currAction = nextAction;
-  }
-  
-  window.setInterval(actionsAnimate, 2000);
-}
-
-setupActionAnimation();
