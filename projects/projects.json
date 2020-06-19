@@ -1,10 +1,10 @@
 [
     {
         "__project__": true,
-        "name": "Acompianist",
+        "name": "AComPianist",
         "image": "",
         "description": "An interactive computer pianist.",
-        "tools": "TypeScript, Python, CSS, JavaScript, HTML",
+        "tools": "TypeScript, Python, CSS, HTML",
         "date": "Summer 2019",
         "page": "projects/acompianist.html",
         "screenshots": "acompianist",
