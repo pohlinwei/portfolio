@@ -304,12 +304,14 @@ a:hover {
 #left-button, #right-button {
   flex: 1;
   align-self: center;
+  text-align: center;
 }
 
 .project {
   flex: 20;
   padding: 20px;
-  display: flex;
+  /* do not display .project by default */
+  display: none; 
 }
 
 .project-name-placeholder {
@@ -385,6 +387,39 @@ a:hover {
   font-style: normal;
 }
 
+/* PROJECT ANIMATIONS */
+@keyframes rightin {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}  
+
+@keyframes rightout {
+  to {
+    transform: translateX(100%);
+  }
+} 
+
+@keyframes leftin {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes leftout {
+  to {
+    transform: translateX(-100%);
+  }
+} 
+
 /* FOOTER */
 footer {
   background-color: #000;
@@ -393,7 +428,7 @@ footer {
 
 footer > p {
   flex: 1;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }  
-  
