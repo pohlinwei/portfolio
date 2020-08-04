@@ -91,7 +91,8 @@ header > h1 {
   flex: 4;
   padding: 0px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #greeting {
@@ -103,7 +104,15 @@ header > h1 {
   margin-bottom: max(10vh, 20px);
 }
 
-#main-content > .wrapper > p {
+#introduction-and-arrow {
+  display: flex;
+}
+
+#introduction {
+  flex: 4;
+}
+
+#introduction > p {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 1.3rem;
 }
@@ -117,6 +126,27 @@ header > h1 {
   display: none;
 }
 
+#down-arrow-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+#down-arrow {
+  height: 2.5rem;
+  width: 2.5rem;
+  background-repeat: no-repeat;
+  background-image: url("vectors/down_arrow.svg");
+  border: 1px solid #000;
+}
+
+#down-arrow:hover {
+  border-radius: 50%;
+  border: 1px solid #fff;
+  opacity: 0.5;
+}
+
 @media screen and (max-width: 500px) {
   #greeting {
     font-size: 7rem;
@@ -128,8 +158,16 @@ header > h1 {
     font-size: 6rem;
   }
 
-  #main-content > .wrapper > p {
+  #introduction-and-arrow {
+    flex-direction: column;
+  }
+
+  #introduction > p {
     font-size: 1.2rem;
+  }
+
+  #down-arrow-container {
+    display: none;
   }
 }
 
