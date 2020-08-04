@@ -1,7 +1,7 @@
 /* GENERAL */
 :root {
   --min-display-width: max(100vw, 300px);
-  --min-display-height: max(100vh, 400px);
+  --min-display-height: max(100vh, 370px);
   --max-small-screen-width: 420px;
   /* TODO: < 485px portrait mode */ 
 }
@@ -48,14 +48,14 @@ a:hover {
   }
 }
 
-@media screen and (max-height: 400px) {
+@media screen and (max-height: 370px) {
   html {
     font-size: 16px;
   }
 }
 
 section {
-  min-height: 100vh;
+  min-height: max(calc(370px * 0.95), 95vh);
   border-bottom: 1px solid #808080;
   padding: 0px max(3vw, 30px);
 }
@@ -73,8 +73,7 @@ header > h1 {
 }
 
 .section-content {
-  border: 1px solid red; /* TODO: remove */
-  min-height: calc(100vh - 3rem);
+  min-height: max(calc(calc(370px * 0.95) - 4rem), calc(95vh - 4rem));
   display: flex;
   align-items: center;
 }
@@ -194,7 +193,11 @@ nav > ul > li {
 }
 
 /* FEATURED WORKS */
-
+@media screen and (max-width: 500px) and (orientation: portrait) {
+  #works > .section-content {
+    background-color: antiquewhite;
+  }
+}
 
 /* FOOTER */
 footer {
