@@ -64,6 +64,7 @@ header {
   font-family: 'Playfair Display', 'Times New Roman', Times, serif;
   padding: 0px 5px;
   border-bottom: 2px solid #000;
+  display: inline-block;
 }
 
 header > h1 {
@@ -76,6 +77,7 @@ header > h1 {
   min-height: max(calc(calc(370px * 0.95) - 4rem), calc(95vh - 4rem));
   display: flex;
   align-items: center;
+  border: 1px solid red;
 }
 
 /* HOME */
@@ -231,9 +233,25 @@ nav > ul > li {
 }
 
 /* FEATURED WORKS */
-@media screen and (max-width: 500px) and (orientation: portrait) {
-  #works > .section-content {
-    background-color: antiquewhite;
+#works > .section-content {
+  display: flex;
+}
+
+#work-container {
+  flex: 9;
+  height: 50px;
+  border: 1px solid lightsteelblue;
+}
+
+#next-button-vertical {
+  flex: 1;
+  height: 50px;
+  border: 1px solid chocolate;
+}
+
+@media screen and (max-width: 500px), (orientation: portrait) {
+  #next-button-vertical {
+    display: none;
   }
 }
 
