@@ -1,5 +1,27 @@
-const setUpWorks = () => {
-  
+const parentDir = 'https://pohlinwei.github.io/portfolio/';
+const featuredWorksDoc = fetch(parentDir + 'projects/featured_works.json')
+    .then(response => response.json())
+    .then(works => {
+      const overviewWorks: Work[] = [];
+      works.forEach((work: any) => overviewWorks.push({
+        name: work.name,
+        summary: work.summary,
+        tools: work.tools,
+        date: work.date,
+        page: work.page
+      }));
+      setUpWorks(overviewWorks);
+    }) 
+
+type Work = {
+  name: string, 
+  summary: string, 
+  tools: string, 
+  date: string, 
+  page: string
+}
+
+const setUpWorks = (works: Work[]) => {
   let currentlyShownIndex = 0;
 
   const createPagination = (numToCreate: number) => {
@@ -80,7 +102,7 @@ const setUpWorks = () => {
     })
   }
 
-  createWorks();
+  createWorks(works);
 
   const featuredWorks = <HTMLCollectionOf<HTMLDivElement>> document.getElementsByClassName('work');
   ensureNonNull(featuredWorks);
@@ -91,10 +113,10 @@ const setUpWorks = () => {
   enableSwipeToNav();
 }
 
-const createWorks = () => {
+const createWorks = (works: Work[]) => {
   const worksHtml: string[] = [];
-  for (let i = 0; i < 3; i++) {
-    worksHtml.push(createWork('Test', 'foo bar 2', 'hmm', 'Summer 2020', '#'));
+  for (let work of works) {
+    worksHtml.push(createWork(work));
   }
 
   const worksContainer = <HTMLDivElement> document.getElementById('works-container');
@@ -103,22 +125,22 @@ const createWorks = () => {
   worksContainer.innerHTML = worksAndPaginationContainerHTML;
 }
 
-const createWork = (title: string, summary: string, tools: string, date: string, link: string) => 
+const createWork = (work: Work) => 
     `<div class="work">
       <div class="work-title">
-        <h1>${title}</h1>
+        <h1>${work.name}</h1>
       </div>
       <div class="work-description">
         <div class="wrapper">
-          <p class="work-summary">${summary}</p>
+          <p class="work-summary">${work.summary}</p>
           <p class="work-tools">
-            Made with: ${tools}
+            Made with: ${work.tools}
           </p>
           <p class="work-date">
-            Done: ${date}
+            Done: ${work.date}
           </p>
           <div class="details-button">
-            <a href="${link}">Details >></a>
+            <a href="${work.page}">Details >></a>
           </div>
         </div>
       </div>
@@ -281,10 +303,3 @@ const changeDispAndAnimation = (element: HTMLElement, displayValue: Display, ani
   element.style.display = displayValue;
   element.style.animation = animationValue;
 }
-
-setUpWorks();
-/*
-const parentDir = 'https://pohlinwei.github.io/portfolio/';
-const featuredWorksDoc = fetch(parentDir + 'projects/projects.json')
-    .then(response => response.json());
-    .then() // TODO: returns an array of work objects --> pass it into setUpWorks*/
