@@ -34,6 +34,52 @@ const setUpWorks = () => {
     currentlyShownIndex = newShownIndex;
   }
 
+  let currX = 0; 
+  const enableSwipeToNav = () => {
+    const worksContainer = <HTMLDivElement> document.getElementById('works');
+    ensureNonNull(worksContainer);
+    
+    worksContainer.addEventListener('touchstart', ev => currX = ev.touches[0].clientX);
+    worksContainer.addEventListener('touchend', ev => {
+      const newX = ev.touches[0].clientX;
+      const diffX = newX - currX;
+
+      const THRESHOLD_TO_EXCEED_BEFORE_MOVING = 20;
+      if (Math.abs(diffX) < THRESHOLD_TO_EXCEED_BEFORE_MOVING) {
+        return;
+      }
+
+      const moveBy = diffX < 0 ? 1 : -1;
+      const nextIndex = (moveBy + currentlyShownIndex + numOfWorks) % numOfWorks;
+      const currentPagination = <HTMLDivElement> document.getElementsByClassName('works-pagination')[currentlyShownIndex];
+      currentPagination.style.backgroundColor = BackgroundColor.HIDE;
+      animateGoToWork(currentlyShownIndex, nextIndex, featuredWorks);
+      currentlyShownIndex = nextIndex;
+      const nextPagination = <HTMLDivElement> document.getElementsByClassName('works-pagination')[currentlyShownIndex];
+      nextPagination.style.backgroundColor = BackgroundColor.SHOW;
+    })
+
+    worksContainer.addEventListener('mousedown', ev => currX = ev.clientX);
+    worksContainer.addEventListener('mouseup', ev => {
+      const newX = ev.clientX;
+      const diffX = newX - currX;
+
+      const THRESHOLD_TO_EXCEED_BEFORE_MOVING = 20;
+      if (Math.abs(diffX) < THRESHOLD_TO_EXCEED_BEFORE_MOVING) {
+        return;
+      }
+
+      const moveBy = diffX < 0 ? 1 : -1;
+      const nextIndex = (moveBy + currentlyShownIndex + numOfWorks) % numOfWorks;
+      const currentPagination = <HTMLDivElement> document.getElementsByClassName('works-pagination')[currentlyShownIndex];
+      currentPagination.style.backgroundColor = BackgroundColor.HIDE;
+      animateGoToWork(currentlyShownIndex, nextIndex, featuredWorks);
+      currentlyShownIndex = nextIndex;
+      const nextPagination = <HTMLDivElement> document.getElementsByClassName('works-pagination')[currentlyShownIndex];
+      nextPagination.style.backgroundColor = BackgroundColor.SHOW;
+    })
+  }
+
   createWorks();
 
   const featuredWorks = <HTMLCollectionOf<HTMLDivElement>> document.getElementsByClassName('work');
@@ -42,6 +88,7 @@ const setUpWorks = () => {
 
   createPagination(numOfWorks);
   onlyShowFirstWork(featuredWorks);
+  enableSwipeToNav();
 }
 
 const createWorks = () => {
@@ -108,7 +155,7 @@ const animateGoToWork = async (currentIndex: number, targetIndex: number, featur
   const indexBeforeTargetIndex = isSlideLeft ? targetIndex - 1 : targetIndex + 1;
   
   const FINAL_DELAY = 1;
-  const finalSlider = new Slider(FINAL_DELAY, isSlideLeft, indexBeforeTargetIndex, 1);
+  const finalSlider = new Slider(FINAL_DELAY, isSlideLeft, indexBeforeTargetIndex, 1, featuredWorks.length);
   const finalMoveFromTo = finalSlider.move();
   const finalMoveFromWork = featuredWorks[finalMoveFromTo.from];
   const finalMoveToWork = featuredWorks[finalMoveFromTo.to];
@@ -116,7 +163,7 @@ const animateGoToWork = async (currentIndex: number, targetIndex: number, featur
 
   if (hasIntermediateSteps) {
     const intermediateSteps = Math.abs(diff) - 1;
-    const intermediateSlider = new Slider(INTERMEDIATE_DELAY, isSlideLeft, currentIndex, intermediateSteps);
+    const intermediateSlider = new Slider(INTERMEDIATE_DELAY, isSlideLeft, currentIndex, intermediateSteps, featuredWorks.length);
 
     let moveFromTo = intermediateSlider.move();
     let currMoveFromWork = featuredWorks[moveFromTo.from];
@@ -169,14 +216,16 @@ class Slider {
   currentIndex: number;
   remainingStepsToMove: number;
   isSlideLeft: boolean;
+  numWorks: number;
 
-  constructor(animationDuration: number, isSlideLeft: boolean, currentIndex: number, numStepsToMove: number) {
+  constructor(animationDuration: number, isSlideLeft: boolean, currentIndex: number, numStepsToMove: number, numWorks: number) {
     ensureNonNegative(animationDuration, currentIndex, numStepsToMove);
     console.assert(numStepsToMove !== 0, 'Slider should not have no steps to move');
     this.animationDuration = animationDuration;
     this.currentIndex = currentIndex;
     this.remainingStepsToMove = numStepsToMove;
     this.isSlideLeft = isSlideLeft;
+    this.numWorks = numWorks;
 
     if (isSlideLeft) {
       this.sliderComponent = {
@@ -196,7 +245,7 @@ class Slider {
   }
 
   private get nextIndex(): number {
-    return this.currentIndex + (this.isSlideLeft ? 1 : -1);
+    return (this.currentIndex + (this.isSlideLeft ? 1 : -1) + this.numWorks % this.numWorks);
   }
 
   move(): MoveFromTo {
@@ -234,3 +283,8 @@ const changeDispAndAnimation = (element: HTMLElement, displayValue: Display, ani
 }
 
 setUpWorks();
+/*
+const parentDir = 'https://pohlinwei.github.io/portfolio/';
+const featuredWorksDoc = fetch(parentDir + 'projects/projects.json')
+    .then(response => response.json());
+    .then() // TODO: returns an array of work objects --> pass it into setUpWorks*/
