@@ -14,7 +14,7 @@
     <script src="scripts/mainview_and_menu.js" defer></script>
     <script src="scripts/home.js" defer></script>
     <script src="scripts/project.js" defer></script>
-    <script src="scripts/featured_works.js" defer></script>
+    <script src="scripts/works.js" defer></script>
   </head>
   <body>
     <section id="home">
@@ -33,16 +33,22 @@
       <div id="main-content">
         <div class="wrapper">
           <h1 id="greeting">Hi there!</h1>
-          <p>I am Lin Wei.</p>
-          <p>I <span class="value-statement">realise ideas with algorithms,</span>
-            <span class="value-statement">care about users' experience,</span>
-            <span class="value-statement">aspire to create art with math.</span>
-          </p>
+          <div id="introduction-and-arrow" class="wrapper">
+            <div id="introduction">
+              <p>I am Lin Wei.</p>
+              <p>I <span class="value-statement">realise ideas with algorithms,</span>
+                <span class="value-statement">care about users' experience,</span>
+                <span class="value-statement">aspire to create art with math.</span>
+              </p>
+            </div>
+            <div id="down-arrow-container" class="wrapper">
+              <a href="#works"><div id="down-arrow"></div></a>
+            </div>
+          </div>
         </div>
       </div>
     </section> 
    
-
     <!--DROPDOWN MENU-->
     <!--
     <div id="menu">
@@ -59,13 +65,31 @@
     </div>-->
 
     <!--FEATURED WORKS-->
-    <section>
+    <section id="works">
       <header>
         <h1>Featured Works</h1>
       </header>
       <div class="section-content">
-        <p>Test</p>
+        <div id="works-container">
+        </div>
+        <div id="more-button-container-vertical">
+          <div class="more-button-line-vertical"></div>
+            <a href="https://github.com/pohlinwei">
+              <div class="more-button" id="more-button-vertical">
+                <p>more</p>
+              </div>
+            </a>
+          <div class="more-button-line-vertical"></div>
+        </div>
       </div>
+      <div id="more-button-container-horizontal">
+          <a href="https://github.com/pohlinwei">
+            <div class="more-button" id="more-button-horizontal">
+              <p>more</p>
+            </div>
+          </a>
+      </div>
+    </div>
     </section>
 
     <!--ABOUT ME-->
