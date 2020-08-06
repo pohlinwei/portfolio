@@ -39,4 +39,16 @@ function ensureNonNull(... args: any) {
 
   console.assert(!hasError, `Missing desired element: ${err}`);
 }
+
+const ensureNonNegative = (... nums: number[]) => nums.forEach(
+    num => console.assert(num >= 0, 'Given number should not be negative')
+);
+
+enum Display {
+  HIDE = 'none',
+  SHOW = 'flex'
+};
+
+/** Converts seconds to milliseconds. */
+const toMilliseconds = (seconds: number) => seconds * 1000;
   

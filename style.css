@@ -261,7 +261,7 @@ nav > ul > li {
   margin-right: var(--right-offset);
 }
 
-#work-container > .wrapper:first-child {
+.work {
   min-height: calc(0.95 * var(--min-height));
   display: flex;
   align-items: center;
@@ -313,7 +313,7 @@ nav > ul > li {
   display: inline-block;
 }
 
-#work-container > .wrapper:last-child {
+#works-pagination-container {
   min-height: calc(0.1 * var(--min-height));
   display: flex;
   align-items: flex-end;
@@ -328,6 +328,12 @@ nav > ul > li {
   margin: 10px;
 }
 
+.works-pagination:hover {
+  cursor: pointer;
+  background-color: rgb(207, 207, 207);
+}
+
+/* vertical more button */
 #more-button-container-vertical {
   flex: 1;
   height: calc(var(--min-height) + 10vh);
@@ -367,6 +373,7 @@ nav > ul > li {
   text-orientation: upright;
 }
 
+/* horizontal more button */
 #more-button-container-horizontal {
   --width: max(280px, 90vw);
   display: none;
@@ -382,12 +389,45 @@ nav > ul > li {
   line-height: 0px;
 }
 
+/* animation */
+@keyframes rightin {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}  
+
+@keyframes rightout {
+  to {
+    transform: translateX(100%);
+  }
+} 
+
+@keyframes leftin {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes leftout {
+  to {
+    transform: translateX(-100%);
+  }
+} 
+
 @media screen and (max-width: 500px), (max-height: 375px), (orientation: portrait) {
   #work-container {
     margin-right: auto;
   }
 
-  #work-container > .wrapper:first-child {
+  .work {
     flex-direction: column;
   }
 
