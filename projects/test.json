@@ -1,0 +1,14 @@
+[
+    {
+        "__project__": true,
+        "name": "AComPianist",
+        "image": "",
+        "summary": "An interactive computer pianist.",
+        "description": "Lordlfh;ldhf;lsdhf;lkdshfl;kdshf;lkdshl;akfhsdal;kdshf",
+        "tools": "TypeScript, Python, CSS, HTML",
+        "date": "Summer 2019",
+        "page": "projects/acompianist.html",
+        "screenshots": "acompianist",
+        "github": "https://github.com/pohlinwei/AComPianist"
+    }
+]

@@ -1,0 +1,35 @@
+[
+    {
+        "__project__": true,
+        "name": "AComPianist",
+        "image": "",
+        "description": "An interactive computer pianist.",
+        "tools": "TypeScript, Python, CSS, HTML",
+        "date": "Summer 2019",
+        "page": "projects/acompianist.html",
+        "screenshots": "acompianist",
+        "github": "https://github.com/pohlinwei/AComPianist"
+    },
+    {
+        "__project__": true,
+        "name": "Zeitraum",
+        "image": "",
+        "description": "A minimalistic productivity web application that does what you need.",
+        "tools": "Python, HTML, CSS, JavaScript",
+        "date": "Summer 2018",
+        "page": "projects/zeitraum.html",
+        "screenshots": "zeitraum",
+        "github": ""
+    },
+    {
+        "__project__": true,
+        "name": "Adventure",
+        "image": "",
+        "description": "A Tumblr theme that is good for text-heavy content.",
+        "tools": "HTML",
+        "date": "Winter 2017",
+        "page": "projects/adventure.html",
+        "screenshots": "adventure",
+        "github": "https://github.com/pohlinwei/Adventure"
+    }
+]
