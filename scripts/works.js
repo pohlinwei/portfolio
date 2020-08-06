@@ -9,16 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const setUpWorks = () => {
-    const featuredWorks = document.getElementsByClassName('work');
-    ensureNonNull(featuredWorks);
-    const numOfWorks = featuredWorks.length;
     let currentlyShownIndex = 0;
     const createPagination = (numToCreate) => {
         const paginationContainer = document.getElementById('works-pagination-container');
         ensureNonNull(paginationContainer);
         const paginationHtmlArr = [];
         for (let i = 0; i < numToCreate; i++) {
-            paginationHtmlArr.push(getPaginationHtmlString(i));
+            paginationHtmlArr.push(getPaginationHtml(i));
         }
         paginationContainer.innerHTML = paginationHtmlArr.join('');
         const paginations = document.getElementsByClassName('works-pagination');
@@ -36,9 +33,43 @@ const setUpWorks = () => {
         pagination.style.backgroundColor = BackgroundColor.SHOW;
         currentlyShownIndex = newShownIndex;
     };
+    createWorks();
+    const featuredWorks = document.getElementsByClassName('work');
+    ensureNonNull(featuredWorks);
+    const numOfWorks = featuredWorks.length;
     createPagination(numOfWorks);
     onlyShowFirstWork(featuredWorks);
 };
+const createWorks = () => {
+    const worksHtml = [];
+    for (let i = 0; i < 3; i++) {
+        worksHtml.push(createWork('Test', 'foo bar 2', 'hmm', 'Summer 2020', '#'));
+    }
+    const worksContainer = document.getElementById('works-container');
+    ensureNonNull(worksContainer);
+    const worksAndPaginationContainerHTML = [...worksHtml, getPaginationContainerHTML()].join('');
+    worksContainer.innerHTML = worksAndPaginationContainerHTML;
+};
+const createWork = (title, summary, tools, date, link) => `<div class="work">
+      <div class="work-title">
+        <h1>${title}</h1>
+      </div>
+      <div class="work-description">
+        <div class="wrapper">
+          <p class="work-summary">${summary}</p>
+          <p class="work-tools">
+            Made with: ${tools}
+          </p>
+          <p class="work-date">
+            Done: ${date}
+          </p>
+          <div class="details-button">
+            <a href="${link}">Details >></a>
+          </div>
+        </div>
+      </div>
+    </div>`;
+const getPaginationContainerHTML = () => '<div id="works-pagination-container"></div>';
 var BackgroundColor;
 (function (BackgroundColor) {
     BackgroundColor["HIDE"] = "#fff";
@@ -52,7 +83,7 @@ const onlyShowFirstWork = (featuredWorks) => {
         featuredWorks[i].style.display = Display.HIDE;
     }
 };
-const getPaginationHtmlString = (pageNum) => `<div class="works-pagination" pageNum="${pageNum}"></div>`;
+const getPaginationHtml = (pageNum) => `<div class="works-pagination" pageNum="${pageNum}"></div>`;
 const animateGoToWork = (currentIndex, targetIndex, featuredWorks) => __awaiter(void 0, void 0, void 0, function* () {
     const diff = targetIndex - currentIndex;
     if (diff === 0) {

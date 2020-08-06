@@ -251,7 +251,7 @@ nav > ul > li {
   display: flex;
 }
 
-#work-container {
+#works-container {
   flex: 9;
   min-height: var(--min-height);
   display: flex;
@@ -423,12 +423,17 @@ nav > ul > li {
 } 
 
 @media screen and (max-width: 500px), (max-height: 375px), (orientation: portrait) {
-  #work-container {
+  #works-container {
     margin-right: auto;
   }
 
   .work {
     flex-direction: column;
+  }
+
+  .work-description {
+    align-items: flex-start;
+    justify-content: start;
   }
 
   #more-button-container-vertical {
