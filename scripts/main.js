@@ -36,5 +36,5 @@ function hideLoaderShowContent() {
         for (let i = 0; i < footer.length; i++) {
             footer[i].style.display = Display.SHOW;
         }
-    }, 3000);
+    }, 3000); // duration should be synchronised with fade-out's 
 }

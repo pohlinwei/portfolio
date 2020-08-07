@@ -45,9 +45,11 @@ function setUpWorks(works) {
         const worksContainer = document.getElementById('works');
         ensureNonNull(worksContainer);
         // for touch screen devices
-        worksContainer.addEventListener('touchstart', ev => currX = ev.touches[0].clientX);
+        worksContainer.addEventListener('touchstart', ev => {
+            currX = ev.changedTouches[0].screenX;
+        });
         worksContainer.addEventListener('touchend', ev => {
-            const newX = ev.touches[0].clientX;
+            const newX = ev.changedTouches[0].screenX;
             const diffX = newX - currX;
             const THRESHOLD_TO_EXCEED_BEFORE_MOVING = 20;
             if (Math.abs(diffX) < THRESHOLD_TO_EXCEED_BEFORE_MOVING) {
