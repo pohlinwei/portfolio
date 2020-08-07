@@ -62,7 +62,8 @@ section {
   min-height: max(calc(370px * 0.95), 95vh);
   border-bottom: 1px solid #adadad;
   padding: 0px max(3vw, 30px);
-  display: none; /* By default. Should be shown (set to 'block') using script. */
+  display: none; /* By default. Should be shown (set to 'flex') using script. */
+  flex-direction: column;
 }
 
 header {
@@ -385,6 +386,7 @@ nav > ul > li {
   width: var(--width);
   align-items: center;
   justify-content: center;
+  align-self: center;
 }
 
 #more-button-horizontal {

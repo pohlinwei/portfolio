@@ -46,8 +46,7 @@ const ensureNonNegative = (... nums: number[]) => nums.forEach(
 
 enum Display {
   HIDE = 'none',
-  SHOW = 'flex',
-  SHOW_BLOCK = 'block'
+  SHOW = 'flex'
 };
 
 /** Converts seconds to milliseconds. */

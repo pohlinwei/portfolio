@@ -28,7 +28,7 @@ function hideLoaderShowContent() {
         const footer = document.getElementsByTagName('footer');
         ensureNonNull(contentElements, loader);
         for (let i = 0; i < contentElements.length; i++) {
-            contentElements[i].style.display = Display.SHOW_BLOCK;
+            contentElements[i].style.display = Display.SHOW;
         }
         const homeSection = document.getElementById('home');
         ensureNonNull(homeSection);

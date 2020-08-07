@@ -32,7 +32,7 @@ function hideLoaderShowContent() {
     ensureNonNull(contentElements, loader);
 
     for (let i = 0; i < contentElements.length; i++) {
-      contentElements[i].style.display = Display.SHOW_BLOCK;
+      contentElements[i].style.display = Display.SHOW;
     }
     const homeSection = <HTMLDivElement> document.getElementById('home');
     ensureNonNull(homeSection);
