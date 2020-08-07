@@ -46,7 +46,6 @@ var Display;
 (function (Display) {
     Display["HIDE"] = "none";
     Display["SHOW"] = "flex";
-    Display["SHOW_BLOCK"] = "block";
 })(Display || (Display = {}));
 ;
 /** Converts seconds to milliseconds. */

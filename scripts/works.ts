@@ -51,7 +51,7 @@ function setUpWorks(works: Work[]) { // Main function to be called.
   /** Enables user to swipe to the left and right. */
   const enableSwipeToNav = () => {
     let currX = 0; 
-    const worksContainer = <HTMLDivElement> document.getElementById('works');
+    const worksContainer = <HTMLDivElement> document.getElementById('works-container');
     ensureNonNull(worksContainer);
     
     // for touch screen devices
