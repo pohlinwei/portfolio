@@ -6,6 +6,10 @@
   /* TODO: < 485px portrait mode */ 
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0px;
 }
