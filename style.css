@@ -62,7 +62,7 @@ section {
   min-height: max(calc(370px * 0.95), 95vh);
   border-bottom: 1px solid #adadad;
   padding: 0px max(3vw, 30px);
-  display: flex; /* By default. Should be shown (set to 'flex') using script. TODO:*/
+  display: none; /* By default. Should be shown (set to 'flex') using script. */
   flex-direction: column;
 }
 
@@ -103,7 +103,7 @@ header > h1 {
   padding: max(1.5vh, 20px) max(4vw, 20px);
   background-color: #000;
   color: #fff;
-  display: flex; /* By default. Should be set to 'flex' by script. TODO: */
+  display: none; /* By default. Should be set to 'flex' by script. */
   flex-direction: column;
 }
 
@@ -569,7 +569,7 @@ footer {
   text-align: center;
   color: #fff;
   background-color: #000;
-  display: flex; /* By default. Should be shown (set to 'flex') using script. TODO: */
+  display: none; /* By default. Should be shown (set to 'flex') using script. */
 }
 
 footer > p {
@@ -580,7 +580,7 @@ footer > p {
 #loader { 
   height: 100vh;
   width: 100vw;
-  display: none; /* TODO: */
+  display: flex;
   align-items: center;
 }
 
