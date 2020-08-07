@@ -496,18 +496,27 @@ nav > ul > li {
 }
 
 /* CONTACT */
-#contact > div[class="section-content"] {
-  flex-wrap: wrap;
+#contact-message {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  max-width: max(200px, 30vw);
 }
 
 #contact-message {
-  min-width: 250px;
-  border: 1px solid red;
+  font-size: 1rem;
+}
+
+#contact-message > h2 {
+  margin-top: 2rem;
+}
+
+#contact-message > p > a {
+  text-decoration: underline;
 }
 
 form {
   min-height: max(300px, 60vh);
-  min-width: max(50vw, 200px);
+  min-width: max(40vw, 200px);
   margin: 15px auto;
   box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: flex;
@@ -553,6 +562,20 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
   cursor: pointer;
+}
+
+@media screen and (max-width: 550px) {
+  #contact > div[class="section-content"] {
+    flex-direction: column;
+  }
+
+  #contact-message {
+    max-width: max(250px, 80vw);
+  }
+
+  form {
+    min-width: max(70vw, 200px);
+  }
 }
 
 /* FORM LOADER */
