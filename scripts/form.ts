@@ -15,19 +15,19 @@ function setupForm() {
     if (status === FormState.SUCCESS) {
       clearFormInputs(inputAndLabels);
     }
-    hideShowFormLoader(form);
+    hideShowFormLoader();
   }
 
   btn.onclick = event => {
     event.preventDefault();
     status = FormState.SUBMITTING;
-    showFormLoader(form, status);
+    showFormLoader(status);
     let processedInputs: Input[] = [];
     try {
       processedInputs = getProcessedInputs(inputAndLabels);
     } catch (e) {
       status = FormState.ERROR;
-      showFormLoader(form, status, e);
+      showFormLoader(status, e);
       return;
     }
     
@@ -42,18 +42,74 @@ function setupForm() {
     .then(response => {
       if (response.ok) {
         status = FormState.SUCCESS;
-        showFormLoader(form, status);
+        showFormLoader(status);
       } else {
         status = FormState.ERROR;
-        showFormLoader(form, status);
+        showFormLoader(status);
       }
       console.log(response);
     })   
     .catch(err => {
       console.error(err);
       status = FormState.ERROR;
-      showFormLoader(form, status, err);
+      showFormLoader(status, err);
     });
+  }
+
+  const formLoader = <HTMLDivElement> document.getElementById('form-submission-loader');
+  ensureNonNull(formLoader);
+  const formChildren = <HTMLCollectionOf<HTMLElement>> form.children;
+  const hideShowFormLoader = () => {
+    for (let i = 0; i < formChildren.length; i++) {
+      formChildren[i].style.display = Display.SHOW;
+    }
+  
+    hideFormState();
+  
+    formLoader.style.display = Display.HIDE;
+  }
+
+  const images = <HTMLCollectionOf<HTMLElement>> document.getElementsByClassName('form-image');
+  const messagePlaceholderElement = <HTMLParagraphElement> document.getElementById('form-response-text');
+  ensureNonNull(messagePlaceholderElement);
+  const hideFormState = () => {
+    for (let i = 0; i < images.length; i++) {
+      images[i].style.display = Display.HIDE;
+    }
+  
+    messagePlaceholderElement.style.animation = 'none';
+  }
+
+  const showFormLoader = (formState: FormState, message?: string) => {
+    hideFormState();
+    for (let i = 0; i < formChildren.length; i++) {
+      formChildren[i].style.display = Display.HIDE;
+    }
+
+    backToFormButton.style.display = Display.SHOW_BLOCK;
+    let image: HTMLElement = <HTMLDivElement> document.getElementById('form-submitting-image');
+    switch (formState) {
+      case FormState.SUBMITTING:
+        messagePlaceholderElement.style.animation = 'blinker 0.8s linear infinite';
+        backToFormButton.style.display = Display.HIDE;
+        // no need to set image since by default this is the image chosen
+        break;
+      case FormState.SUCCESS:
+        image = <HTMLParagraphElement> document.getElementById('form-success-image');
+        break;
+      case FormState.ERROR:
+        image = <HTMLParagraphElement> document.getElementById('form-error-image');
+        break;
+      default:
+        console.assert(true, 'There should only be 3 possible states during form submission');
+        break;
+    }
+    ensureNonNull(image);
+  
+    messagePlaceholderElement.innerHTML = message === undefined ? `${formState}` : `${message}`;
+  
+    formLoader.style.display = Display.SHOW;
+    image.style.display = Display.SHOW_BLOCK;
   }
 }
 
@@ -129,67 +185,7 @@ enum FormState {
   SUCCESS = 'Done!'
 }
 
-const showFormLoader = (form: HTMLFormElement, formState: FormState, message?: string) => {
-  hideFormState();
-  const formChildren = <HTMLCollectionOf<HTMLElement>> form.children;
-  for (let i = 0; i < formChildren.length; i++) {
-    formChildren[i].style.display = Display.HIDE;
-  }
-
-  const formLoader = <HTMLDivElement> document.getElementById('form-submission-loader');
-  ensureNonNull(formLoader);
-  const messagePlaceholderElement = <HTMLParagraphElement> document.getElementById('form-response-text');
-  ensureNonNull(messagePlaceholderElement);
-
-  let image: HTMLElement = <HTMLDivElement> document.getElementById('form-submitting-image');
-  switch (formState) {
-    case FormState.SUBMITTING:
-      messagePlaceholderElement.style.animation = 'blinker 0.8s linear infinite';
-      // no need to set image since by default this is the image chosen
-      break;
-    case FormState.SUCCESS:
-      image = <HTMLParagraphElement> document.getElementById('form-success-image');
-      break;
-    case FormState.ERROR:
-      image = <HTMLParagraphElement> document.getElementById('form-error-image');
-      break;
-    default:
-      console.assert(true, 'There should only be 3 possible states during form submission');
-      break;
-  }
-  ensureNonNull(image);
-
-  messagePlaceholderElement.innerHTML = message === undefined ? `${formState}` : `${message}`;
-
-  formLoader.style.display = Display.SHOW;
-  image.style.display = Display.SHOW_BLOCK;
-}
-
-const hideFormState = () => {
-  const images = <HTMLCollectionOf<HTMLElement>> document.getElementsByClassName('form-image');
-  for (let i = 0; i < images.length; i++) {
-    images[i].style.display = Display.HIDE;
-  }
-
-  const messagePlaceholderElement = <HTMLParagraphElement> document.getElementById('form-response-text');
-  ensureNonNull(messagePlaceholderElement);
-  messagePlaceholderElement.style.animation = 'none';
-}
-
 const clearFormInputs = (inputAndLabels: InputAndLabel[]) => {
   inputAndLabels.forEach(inputAndLabel => inputAndLabel.inputElement.value = '');
-}
-
-const hideShowFormLoader = (form: HTMLFormElement) => {
-  const formChildren = <HTMLCollectionOf<HTMLElement>> form.children;
-  for (let i = 0; i < formChildren.length; i++) {
-    formChildren[i].style.display = Display.SHOW;
-  }
-
-  hideFormState();
-
-  const formLoader = <HTMLDivElement> document.getElementById('form-submission-loader');
-  ensureNonNull(formLoader);
-  formLoader.style.display = Display.HIDE;
 }
   
