@@ -523,6 +523,7 @@ input[type="submit"]:hover {
 
 .form-image {
   display: none;
+  margin: auto;
 }
 
 #form-error-image {
@@ -545,7 +546,6 @@ input[type="submit"]:hover {
 #form-response-text {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 1rem;
-  text-transform: capitalize;
   margin-bottom: 1rem;
   text-align: center;
 }

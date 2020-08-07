@@ -5,35 +5,53 @@ function setupForm() {
     ensureNonNull(btn, form);
     const formSubmissionLink = form.getAttribute('action');
     ensureNonNull(formSubmissionLink);
+    const inputAndLabels = getInputAndLabels();
+    let status = null;
     const backToFormButton = document.getElementById('back-to-form-button');
     ensureNonNull(backToFormButton);
-    backToFormButton.onclick = () => hideShowFormLoader(form);
-    //const inputAndLabels = getInputAndLabels();
+    backToFormButton.onclick = () => {
+        if (status === FormState.SUCCESS) {
+            clearFormInputs(inputAndLabels);
+        }
+        hideShowFormLoader(form);
+    };
     btn.onclick = event => {
         event.preventDefault();
-        showFormLoader(form, FormState.SUBMITTING);
-        // TODO: show message
-        //let processedInputs: Input[] = [];
+        status = FormState.SUBMITTING;
+        showFormLoader(form, status);
+        let processedInputs = [];
         try {
-            //processedInputs = getProcessedInputs(inputAndLabels);
+            processedInputs = getProcessedInputs(inputAndLabels);
         }
         catch (e) {
-            // TODO: inform user
+            status = FormState.ERROR;
+            showFormLoader(form, status, e);
             return;
         }
-        /*
         fetch(formSubmissionLink, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: toFormUrlEncoded(processedInputs)
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            },
+            body: toFormUrlEncoded(processedInputs)
         })
-        .then(response => response.json())
-        .catch(err => {
-          console.error(err);
-          // TODO: show error message --> fade out
-        });*/
+            .then(response => {
+            if (response.ok) {
+                status = FormState.SUCCESS;
+                showFormLoader(form, status);
+            }
+            else {
+                status = FormState.ERROR;
+                showFormLoader(form, status);
+            }
+            console.log(response);
+        })
+            .catch(err => {
+            console.error(err);
+            status = FormState.ERROR;
+            showFormLoader(form, status, err);
+        });
     };
 }
 const getInputAndLabels = () => {
@@ -61,9 +79,16 @@ const getProcessedInputs = (inputAndLabels) => {
         if (inputValue === '' || inputValue === null || inputAndLabel === undefined) {
             throw new Error(`Please input value for ${labelKey} field.`);
         }
+        if (labelKey === 'email' && !validateEmail(inputValue)) {
+            throw new Error(`Please input a valid email.`);
+        }
         processedInputs.push({ key: labelKey, value: inputValue });
     }
     return processedInputs;
+};
+const validateEmail = (email) => {
+    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return regex.test(String(email).toLowerCase());
 };
 /**
  * Converts the specified object to x-www-form-urlencoded format.
@@ -72,15 +97,16 @@ const getProcessedInputs = (inputAndLabels) => {
 const toFormUrlEncoded = (inputs) => {
     return inputs
         .map((input) => `${encodeURIComponent(input.key)}=${encodeURIComponent(input.value)}`)
-        .join('&');
+        .join('&') + `&${encodeURIComponent('_gotcha')}=`;
 };
 var FormState;
 (function (FormState) {
-    FormState["SUBMITTING"] = "submitting...";
-    FormState["ERROR"] = "error:";
-    FormState["SUCCESS"] = "done!";
+    FormState["SUBMITTING"] = "Submitting...";
+    FormState["ERROR"] = "Error";
+    FormState["SUCCESS"] = "Done!";
 })(FormState || (FormState = {}));
 const showFormLoader = (form, formState, message) => {
+    hideFormState();
     const formChildren = form.children;
     for (let i = 0; i < formChildren.length; i++) {
         formChildren[i].style.display = Display.HIDE;
@@ -106,20 +132,28 @@ const showFormLoader = (form, formState, message) => {
             break;
     }
     ensureNonNull(image);
-    message = message === undefined ? '' : message;
-    messagePlaceholderElement.innerHTML = `${formState} ${message}`;
+    messagePlaceholderElement.innerHTML = message === undefined ? `${formState}` : `${message}`;
     formLoader.style.display = Display.SHOW;
-    image.style.display = Display.SHOW;
+    image.style.display = Display.SHOW_BLOCK;
+};
+const hideFormState = () => {
+    const images = document.getElementsByClassName('form-image');
+    for (let i = 0; i < images.length; i++) {
+        images[i].style.display = Display.HIDE;
+    }
+    const messagePlaceholderElement = document.getElementById('form-response-text');
+    ensureNonNull(messagePlaceholderElement);
+    messagePlaceholderElement.style.animation = 'none';
+};
+const clearFormInputs = (inputAndLabels) => {
+    inputAndLabels.forEach(inputAndLabel => inputAndLabel.inputElement.value = '');
 };
 const hideShowFormLoader = (form) => {
     const formChildren = form.children;
     for (let i = 0; i < formChildren.length; i++) {
         formChildren[i].style.display = Display.SHOW;
     }
-    const images = document.getElementsByClassName('form-image');
-    for (let i = 0; i < images.length; i++) {
-        images[i].style.display = Display.HIDE;
-    }
+    hideFormState();
     const formLoader = document.getElementById('form-submission-loader');
     ensureNonNull(formLoader);
     formLoader.style.display = Display.HIDE;

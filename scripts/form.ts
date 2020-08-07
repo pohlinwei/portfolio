@@ -6,36 +6,54 @@ function setupForm() {
   const formSubmissionLink = <string> form.getAttribute('action');
   ensureNonNull(formSubmissionLink);
 
+  const inputAndLabels = getInputAndLabels();
+
+  let status: FormState | null = null;
   const backToFormButton = <HTMLDivElement> document.getElementById('back-to-form-button');
   ensureNonNull(backToFormButton);
-  backToFormButton.onclick = () => hideShowFormLoader(form);
-
-  //const inputAndLabels = getInputAndLabels();
+  backToFormButton.onclick = () => {
+    if (status === FormState.SUCCESS) {
+      clearFormInputs(inputAndLabels);
+    }
+    hideShowFormLoader(form);
+  }
 
   btn.onclick = event => {
     event.preventDefault();
-    showFormLoader(form, FormState.SUBMITTING);
-    // TODO: show message
-    //let processedInputs: Input[] = [];
+    status = FormState.SUBMITTING;
+    showFormLoader(form, status);
+    let processedInputs: Input[] = [];
     try {
-      //processedInputs = getProcessedInputs(inputAndLabels);
+      processedInputs = getProcessedInputs(inputAndLabels);
     } catch (e) {
-      // TODO: inform user
+      status = FormState.ERROR;
+      showFormLoader(form, status, e);
       return;
     }
-    /*
+    
     fetch(formSubmissionLink, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        "Accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
       },
       body: toFormUrlEncoded(processedInputs)
     })
-    .then(response => response.json())   
+    .then(response => {
+      if (response.ok) {
+        status = FormState.SUCCESS;
+        showFormLoader(form, status);
+      } else {
+        status = FormState.ERROR;
+        showFormLoader(form, status);
+      }
+      console.log(response);
+    })   
     .catch(err => {
       console.error(err);
-      // TODO: show error message --> fade out
-    });*/
+      status = FormState.ERROR;
+      showFormLoader(form, status, err);
+    });
   }
 }
 
@@ -80,10 +98,19 @@ const getProcessedInputs = (inputAndLabels: InputAndLabel[]) => {
       throw new Error(`Please input value for ${labelKey} field.`);
     }
 
+    if (labelKey === 'email' && !validateEmail(inputValue)) {
+      throw new Error(`Please input a valid email.`);
+    }
+
     processedInputs.push({key: labelKey, value: inputValue});
   }
 
   return processedInputs;
+}
+
+const validateEmail = (email: string) => {
+  const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return regex.test(String(email).toLowerCase());
 }
 
 /**
@@ -93,16 +120,17 @@ const getProcessedInputs = (inputAndLabels: InputAndLabel[]) => {
 const toFormUrlEncoded = (inputs: Input[]) => {
   return inputs
     .map((input: Input) => `${encodeURIComponent(input.key)}=${encodeURIComponent(input.value)}`)
-    .join('&');
+    .join('&') + `&${encodeURIComponent('_gotcha')}=`;
 }
 
 enum FormState {
-  SUBMITTING = 'submitting...',
-  ERROR = 'error:',
-  SUCCESS = 'done!'
+  SUBMITTING = 'Submitting...',
+  ERROR = 'Error',
+  SUCCESS = 'Done!'
 }
 
 const showFormLoader = (form: HTMLFormElement, formState: FormState, message?: string) => {
+  hideFormState();
   const formChildren = <HTMLCollectionOf<HTMLElement>> form.children;
   for (let i = 0; i < formChildren.length; i++) {
     formChildren[i].style.display = Display.HIDE;
@@ -131,11 +159,25 @@ const showFormLoader = (form: HTMLFormElement, formState: FormState, message?: s
   }
   ensureNonNull(image);
 
-  message = message === undefined ? '' : message;
-  messagePlaceholderElement.innerHTML = `${formState} ${message}`;
+  messagePlaceholderElement.innerHTML = message === undefined ? `${formState}` : `${message}`;
 
   formLoader.style.display = Display.SHOW;
-  image.style.display = Display.SHOW;
+  image.style.display = Display.SHOW_BLOCK;
+}
+
+const hideFormState = () => {
+  const images = <HTMLCollectionOf<HTMLElement>> document.getElementsByClassName('form-image');
+  for (let i = 0; i < images.length; i++) {
+    images[i].style.display = Display.HIDE;
+  }
+
+  const messagePlaceholderElement = <HTMLParagraphElement> document.getElementById('form-response-text');
+  ensureNonNull(messagePlaceholderElement);
+  messagePlaceholderElement.style.animation = 'none';
+}
+
+const clearFormInputs = (inputAndLabels: InputAndLabel[]) => {
+  inputAndLabels.forEach(inputAndLabel => inputAndLabel.inputElement.value = '');
 }
 
 const hideShowFormLoader = (form: HTMLFormElement) => {
@@ -144,14 +186,10 @@ const hideShowFormLoader = (form: HTMLFormElement) => {
     formChildren[i].style.display = Display.SHOW;
   }
 
-  const images = <HTMLCollectionOf<HTMLElement>> document.getElementsByClassName('form-image');
-  for (let i = 0; i < images.length; i++) {
-    images[i].style.display = Display.HIDE;
-  }
+  hideFormState();
 
   const formLoader = <HTMLDivElement> document.getElementById('form-submission-loader');
   ensureNonNull(formLoader);
   formLoader.style.display = Display.HIDE;
 }
-
   
