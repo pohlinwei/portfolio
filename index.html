@@ -14,6 +14,7 @@
     <!--<script src="scripts/mainview_and_menu.js" defer></script>-->
     <script src="scripts/home.js" defer></script>
     <script src="scripts/works.js" defer></script>
+    <script src="scripts/form.js" defer></script>
     <script src="scripts/main.js" defer></script>
   </head>
   <body>
@@ -118,7 +119,28 @@
         <h1>Contact</h1>
       </header>
       <div class="section-content">
-        <p>Contact me here.</p>
+        <div id="contact-message">Contact me here.</div>
+        <form name="contact-form" action="/add_comment" method="post"> 
+          <div class="input-wrapper">
+            <label for="name">Name</label>
+            <input type="text" name="name"/>
+          </div>
+          <div class="input-wrapper">
+            <label for="email">E-Mail</label>
+            <input type="email" name="email"/>
+          </div>
+          <label for="message">Message</label>
+          <textarea name="message" form="contact-form"></textarea>
+          <input id="contact-submit-button" type="submit" value="Submit"/>
+          <!--FORM LOADER-->
+          <div id="form-submission-loader">
+            <div id="form-submitting-image" class="form-image"></div>
+            <p id="form-error-image" class="form-image"><i class="fas fa-exclamation-triangle fa-5x"></i></p>
+            <p id="form-success-image" class="form-image"><i class="far fa-check-circle fa-5x"></i></p>
+            <p id="form-response-text"></p>
+            <div id="back-to-form-button">Back</div>
+          </div>
+        </form>
       </div>
     </section>
 

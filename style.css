@@ -62,7 +62,7 @@ section {
   min-height: max(calc(370px * 0.95), 95vh);
   border-bottom: 1px solid #adadad;
   padding: 0px max(3vw, 30px);
-  display: none; /* By default. Should be shown (set to 'flex') using script. */
+  display: flex; /* By default. Should be shown (set to 'flex') using script. TODO:*/
   flex-direction: column;
 }
 
@@ -103,7 +103,7 @@ header > h1 {
   padding: max(1.5vh, 20px) max(4vw, 20px);
   background-color: #000;
   color: #fff;
-  display: none; /* By default. Should be set to 'flex' by script. */
+  display: flex; /* By default. Should be set to 'flex' by script. TODO: */
   flex-direction: column;
 }
 
@@ -452,6 +452,116 @@ nav > ul > li {
   }
 }
 
+/* CONTACT */
+#contact > div[class="section-content"] {
+  flex-wrap: wrap;
+}
+
+#contact-message {
+  min-width: 250px;
+  border: 1px solid red;
+}
+
+form {
+  min-height: max(300px, 60vh);
+  min-width: max(50vw, 200px);
+  margin: 15px auto;
+  box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  display: flex;
+  flex-direction: column;
+  padding: max(20px, 5vmin);
+}
+
+.input-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+label, input, textarea {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+}
+
+label {
+  margin-bottom: 0.2rem;
+}
+
+input {
+  min-height: 1.5rem;
+  border: 1px solid #000;
+}
+
+textarea {
+  flex: 4;
+  margin-bottom: max(10px, 2vmin);
+  border: 1px solid #000;
+}
+
+input[type="submit"] {
+  background-color: #000000;
+  color: #fff;
+  border: 1px solid #000;
+  font-size: max(0.8rem, 16px);
+  padding: 0.5rem;
+  justify-content: center;
+}
+
+input[type="submit"]:hover {
+  cursor: pointer;
+}
+
+/* FORM LOADER */
+#form-submission-loader {
+  flex: 1;
+  display: none;
+  margin: auto;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-image {
+  display: none;
+}
+
+#form-error-image {
+  color: #e97272;
+}
+
+#form-success-image {
+  color: #a4f09d;
+}
+
+#form-submitting-image {
+  width: 5rem;
+  height: 5rem;
+  background-repeat: no-repeat;
+  background-image: url("vectors/loading.svg");
+  animation: spin 3s linear infinite;
+  margin: 1rem;
+}
+
+#form-response-text {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+#back-to-form-button {
+  border: 1px solid #000;
+  font-size: 1rem;
+  font-family: Helvetica, Arial, sans-serif;
+  text-align: center;
+  padding: 0.5rem 0rem;
+}
+
+#back-to-form-button:hover {
+  cursor: pointer;
+}
+
 /* FOOTER */
 footer {
   font-family: Helvetica, Arial, sans-serif;
@@ -459,7 +569,7 @@ footer {
   text-align: center;
   color: #fff;
   background-color: #000;
-  display: none; /* By default. Should be shown (set to 'flex') using script. */
+  display: flex; /* By default. Should be shown (set to 'flex') using script. TODO: */
 }
 
 footer > p {
@@ -467,10 +577,10 @@ footer > p {
 }
 
 /* LOADER */
-#loader {
+#loader { 
   height: 100vh;
   width: 100vw;
-  display: flex;
+  display: none; /* TODO: */
   align-items: center;
 }
 

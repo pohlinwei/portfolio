@@ -14,6 +14,7 @@ window.onload = () => {
         }));
         setUpWorks(overviewWorks);
         setupActionAnimation();
+        setupForm();
         setTimeout(hideLoaderShowContent, 1000); // delay at least 1s
       }) 
 }
