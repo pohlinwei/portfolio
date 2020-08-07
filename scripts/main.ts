@@ -22,20 +22,24 @@ window.onload = () => {
 function hideLoaderShowContent() {
   const loader = <HTMLDivElement> document.getElementById('loader');
   ensureNonNull(loader);
-  loader.style.display = Display.HIDE;
-  
-  const contentElements = document.getElementsByTagName('section');
-  const footer = document.getElementsByTagName('footer');
-  ensureNonNull(contentElements, loader);
+  loader.classList.add('fade-out');
 
-  for (let i = 0; i < contentElements.length; i++) {
-    contentElements[i].style.display = Display.SHOW_BLOCK;
-  }
-  const homeSection = <HTMLDivElement> document.getElementById('home');
-  ensureNonNull(homeSection);
-  homeSection.style.display = Display.SHOW;
+  setTimeout(() => {
+    loader.style.display = Display.HIDE;
+    
+    const contentElements = document.getElementsByTagName('section');
+    const footer = document.getElementsByTagName('footer');
+    ensureNonNull(contentElements, loader);
 
-  for (let i = 0; i < footer.length; i++) {
-    footer[i].style.display = Display.SHOW;
-  }
+    for (let i = 0; i < contentElements.length; i++) {
+      contentElements[i].style.display = Display.SHOW_BLOCK;
+    }
+    const homeSection = <HTMLDivElement> document.getElementById('home');
+    ensureNonNull(homeSection);
+    homeSection.style.display = Display.SHOW;
+
+    for (let i = 0; i < footer.length; i++) {
+      footer[i].style.display = Display.SHOW;
+    }
+  }, 3000); // duration should be synchronised with fade-out's 
 }

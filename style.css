@@ -459,3 +459,55 @@ footer {
 footer > p {
   flex: 1;
 }
+
+/* LOADER */
+#loader {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+}
+
+.fade-out { /* duration should be synchronised with script */
+  transition: opacity 3s ease-in-out;
+  -webkit-transition: opacity 3s ease-in-out;
+  -moz-transition: opacity 3s ease-in-out;
+  -ms-transition: opacity 3s ease-in-out;
+  -o-transition: opacity 3s ease-in-out;
+   opacity: 0;
+}
+
+#loader > .wrapper {
+  margin: auto;
+}
+
+#loading-image {
+  height: min(20vmin, 100px);
+  width: min(20vmin, 100px);
+  background-repeat: no-repeat;
+  background-image: url("vectors/loading.svg");
+  animation: spin 3s linear infinite;
+  margin: max(10vmin, 30px);
+}
+
+#loading-text {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg); 
+  }
+  100% { 
+    transform: rotate(360deg); 
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
+  }
+}
