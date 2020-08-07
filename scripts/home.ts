@@ -19,5 +19,3 @@ const setupActionAnimation = () => {
   
   window.setInterval(actionsAnimate, 2000);
 }
-
-setupActionAnimation();

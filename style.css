@@ -58,6 +58,7 @@ section {
   min-height: max(calc(370px * 0.95), 95vh);
   border-bottom: 1px solid #adadad;
   padding: 0px max(3vw, 30px);
+  display: none; /* By default. Should be shown (set to 'block') using script. */
 }
 
 header {
@@ -97,7 +98,7 @@ header > h1 {
   padding: max(1.5vh, 20px) max(4vw, 20px);
   background-color: #000;
   color: #fff;
-  display: flex;
+  display: none; /* By default. Should be set to 'flex' by script. */
   flex-direction: column;
 }
 
@@ -452,7 +453,7 @@ footer {
   text-align: center;
   color: #fff;
   background-color: #000;
-  display: flex;
+  display: none; /* By default. Should be shown (set to 'flex') using script. */
 }
 
 footer > p {

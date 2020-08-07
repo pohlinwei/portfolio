@@ -1,18 +1,4 @@
-const parentDir = 'https://pohlinwei.github.io/portfolio/';
-const featuredWorksDoc = fetch(parentDir + 'projects/featured_works.json')
-    .then(response => response.json())
-    .then(works => {
-      const overviewWorks: Work[] = [];
-      works.forEach((work: any) => overviewWorks.push({
-        name: work.name,
-        summary: work.summary,
-        tools: work.tools,
-        date: work.date,
-        page: work.page
-      }));
-      setUpWorks(overviewWorks);
-    }) 
-
+/** Represents a work. */
 type Work = {
   name: string, 
   summary: string, 
@@ -21,9 +7,14 @@ type Work = {
   page: string
 }
 
-const setUpWorks = (works: Work[]) => {
+/** Sets up the featured work section. */
+function setUpWorks(works: Work[]) { // Main function to be called.
   let currentlyShownIndex = 0;
 
+  /** 
+   * Creates a pagination section. 
+   * @param numToCreate The number of buttons to create. This should correspond to the number of featured works to be shown.
+   */
   const createPagination = (numToCreate: number) => {
     const paginationContainer = <HTMLDivElement> document.getElementById('works-pagination-container');
     ensureNonNull(paginationContainer);
@@ -31,7 +22,7 @@ const setUpWorks = (works: Work[]) => {
     const paginationHtmlArr: string[] = [];
     
     for (let i = 0; i < numToCreate; i++) {
-      paginationHtmlArr.push(getPaginationHtml(i));
+      paginationHtmlArr.push(createPaginationButtonHtml(i));
     }
 
     paginationContainer.innerHTML = paginationHtmlArr.join('');
@@ -42,6 +33,7 @@ const setUpWorks = (works: Work[]) => {
     }
   }
 
+  /** Goes to the selected work, as chosen by clicking on one of the buttons in the pagination section. */
   const goToWork:EventListener = (e: Event) => {
     const pagination = <HTMLDivElement> e.target;
     console.assert(pagination.getAttribute('pageNum') !== null, 
@@ -56,11 +48,13 @@ const setUpWorks = (works: Work[]) => {
     currentlyShownIndex = newShownIndex;
   }
 
-  let currX = 0; 
+  /** Enables user to swipe to the left and right. */
   const enableSwipeToNav = () => {
+    let currX = 0; 
     const worksContainer = <HTMLDivElement> document.getElementById('works');
     ensureNonNull(worksContainer);
     
+    // for touch screen devices
     worksContainer.addEventListener('touchstart', ev => currX = ev.touches[0].clientX);
     worksContainer.addEventListener('touchend', ev => {
       const newX = ev.touches[0].clientX;
@@ -81,6 +75,7 @@ const setUpWorks = (works: Work[]) => {
       nextPagination.style.backgroundColor = BackgroundColor.SHOW;
     })
 
+    // for non-touch screen devices
     worksContainer.addEventListener('mousedown', ev => currX = ev.clientX);
     worksContainer.addEventListener('mouseup', ev => {
       const newX = ev.clientX;
@@ -102,6 +97,7 @@ const setUpWorks = (works: Work[]) => {
     })
   }
 
+  // Function calls and actual set-up begins here. 
   createWorks(works);
 
   const featuredWorks = <HTMLCollectionOf<HTMLDivElement>> document.getElementsByClassName('work');
@@ -113,7 +109,11 @@ const setUpWorks = (works: Work[]) => {
   enableSwipeToNav();
 }
 
-const createWorks = (works: Work[]) => {
+/** 
+ * Creates works. 
+ * @param works An array of JSON objects, each of which contains information for a work @see Work. 
+ */
+function createWorks(works: Work[]) {
   const worksHtml: string[] = [];
   for (let work of works) {
     worksHtml.push(createWork(work));
@@ -125,6 +125,10 @@ const createWorks = (works: Work[]) => {
   worksContainer.innerHTML = worksAndPaginationContainerHTML;
 }
 
+/** 
+ * Creates work by representing in HTML.
+ * @param work `Work` to be created
+ */
 const createWork = (work: Work) => 
     `<div class="work">
       <div class="work-title">
@@ -146,14 +150,20 @@ const createWork = (work: Work) =>
       </div>
     </div>`;
 
+/** Returns a pagination container in HTML. */
 const getPaginationContainerHTML = () => '<div id="works-pagination-container"></div>';
 
+/** Creates a button for pagination section using HTML template. */
+const createPaginationButtonHtml = (pageNum: number) => `<div class="works-pagination" pageNum="${pageNum}"></div>`;
+
+/** Represents possible background colours. */
 enum BackgroundColor {
   HIDE = '#fff',
   SHOW = '#000'
 }
 
-const onlyShowFirstWork = (featuredWorks: HTMLCollectionOf<HTMLDivElement>) => {
+/** Ensures that only the first work is shown, and the rest are hidden. Should be called after adding pagination and works. */
+function onlyShowFirstWork(featuredWorks: HTMLCollectionOf<HTMLDivElement>) {
   featuredWorks[0].style.display = Display.SHOW;
   const firstPagination = <HTMLDivElement> document.getElementsByClassName('works-pagination')[0];
   firstPagination.style.backgroundColor = BackgroundColor.SHOW;
@@ -163,9 +173,8 @@ const onlyShowFirstWork = (featuredWorks: HTMLCollectionOf<HTMLDivElement>) => {
   }
 }
 
-const getPaginationHtml = (pageNum: number) => `<div class="works-pagination" pageNum="${pageNum}"></div>`;
-
-const animateGoToWork = async (currentIndex: number, targetIndex: number, featuredWorks: HTMLCollectionOf<HTMLDivElement>) => {
+/** Animates go to work event (i.e. change of work shown). */
+async function animateGoToWork (currentIndex: number, targetIndex: number, featuredWorks: HTMLCollectionOf<HTMLDivElement>) {
   const diff = targetIndex - currentIndex;
 
   if (diff === 0) {
@@ -213,7 +222,6 @@ const animateGoToWork = async (currentIndex: number, targetIndex: number, featur
     changeDispAndAnimation(finalMoveToWork, Display.SHOW, finalSlider.sliderComponent.show);
   }, toMilliseconds(hasIntermediateSteps ? INTERMEDIATE_DELAY : finalSlider.animationDuration / 2));
 }
-
 
 enum Movement {
   LEFT_OUT = 'leftout',

@@ -8,28 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const parentDir = 'https://pohlinwei.github.io/portfolio/';
-const featuredWorksDoc = fetch(parentDir + 'projects/featured_works.json')
-    .then(response => response.json())
-    .then(works => {
-    const overviewWorks = [];
-    works.forEach((work) => overviewWorks.push({
-        name: work.name,
-        summary: work.summary,
-        tools: work.tools,
-        date: work.date,
-        page: work.page
-    }));
-    setUpWorks(overviewWorks);
-});
-const setUpWorks = (works) => {
+/** Sets up the featured work section. */
+function setUpWorks(works) {
     let currentlyShownIndex = 0;
+    /**
+     * Creates a pagination section.
+     * @param numToCreate The number of buttons to create. This should correspond to the number of featured works to be shown.
+     */
     const createPagination = (numToCreate) => {
         const paginationContainer = document.getElementById('works-pagination-container');
         ensureNonNull(paginationContainer);
         const paginationHtmlArr = [];
         for (let i = 0; i < numToCreate; i++) {
-            paginationHtmlArr.push(getPaginationHtml(i));
+            paginationHtmlArr.push(createPaginationButtonHtml(i));
         }
         paginationContainer.innerHTML = paginationHtmlArr.join('');
         const paginations = document.getElementsByClassName('works-pagination');
@@ -37,6 +28,7 @@ const setUpWorks = (works) => {
             paginations[i].addEventListener('click', goToWork);
         }
     };
+    /** Goes to the selected work, as chosen by clicking on one of the buttons in the pagination section. */
     const goToWork = (e) => {
         const pagination = e.target;
         console.assert(pagination.getAttribute('pageNum') !== null, 'Missing \'pageNum\' attribute for a pagination element');
@@ -47,10 +39,12 @@ const setUpWorks = (works) => {
         pagination.style.backgroundColor = BackgroundColor.SHOW;
         currentlyShownIndex = newShownIndex;
     };
-    let currX = 0;
+    /** Enables user to swipe to the left and right. */
     const enableSwipeToNav = () => {
+        let currX = 0;
         const worksContainer = document.getElementById('works');
         ensureNonNull(worksContainer);
+        // for touch screen devices
         worksContainer.addEventListener('touchstart', ev => currX = ev.touches[0].clientX);
         worksContainer.addEventListener('touchend', ev => {
             const newX = ev.touches[0].clientX;
@@ -68,6 +62,7 @@ const setUpWorks = (works) => {
             const nextPagination = document.getElementsByClassName('works-pagination')[currentlyShownIndex];
             nextPagination.style.backgroundColor = BackgroundColor.SHOW;
         });
+        // for non-touch screen devices
         worksContainer.addEventListener('mousedown', ev => currX = ev.clientX);
         worksContainer.addEventListener('mouseup', ev => {
             const newX = ev.clientX;
@@ -86,6 +81,7 @@ const setUpWorks = (works) => {
             nextPagination.style.backgroundColor = BackgroundColor.SHOW;
         });
     };
+    // Function calls and actual set-up begins here. 
     createWorks(works);
     const featuredWorks = document.getElementsByClassName('work');
     ensureNonNull(featuredWorks);
@@ -93,8 +89,12 @@ const setUpWorks = (works) => {
     createPagination(numOfWorks);
     onlyShowFirstWork(featuredWorks);
     enableSwipeToNav();
-};
-const createWorks = (works) => {
+}
+/**
+ * Creates works.
+ * @param works An array of JSON objects, each of which contains information for a work @see Work.
+ */
+function createWorks(works) {
     const worksHtml = [];
     for (let work of works) {
         worksHtml.push(createWork(work));
@@ -103,7 +103,11 @@ const createWorks = (works) => {
     ensureNonNull(worksContainer);
     const worksAndPaginationContainerHTML = [...worksHtml, getPaginationContainerHTML()].join('');
     worksContainer.innerHTML = worksAndPaginationContainerHTML;
-};
+}
+/**
+ * Creates work by representing in HTML.
+ * @param work `Work` to be created
+ */
 const createWork = (work) => `<div class="work">
       <div class="work-title">
         <h1>${work.name}</h1>
@@ -123,60 +127,67 @@ const createWork = (work) => `<div class="work">
         </div>
       </div>
     </div>`;
+/** Returns a pagination container in HTML. */
 const getPaginationContainerHTML = () => '<div id="works-pagination-container"></div>';
+/** Creates a button for pagination section using HTML template. */
+const createPaginationButtonHtml = (pageNum) => `<div class="works-pagination" pageNum="${pageNum}"></div>`;
+/** Represents possible background colours. */
 var BackgroundColor;
 (function (BackgroundColor) {
     BackgroundColor["HIDE"] = "#fff";
     BackgroundColor["SHOW"] = "#000";
 })(BackgroundColor || (BackgroundColor = {}));
-const onlyShowFirstWork = (featuredWorks) => {
+/** Ensures that only the first work is shown, and the rest are hidden. Should be called after adding pagination and works. */
+function onlyShowFirstWork(featuredWorks) {
     featuredWorks[0].style.display = Display.SHOW;
     const firstPagination = document.getElementsByClassName('works-pagination')[0];
     firstPagination.style.backgroundColor = BackgroundColor.SHOW;
     for (let i = 1; i < featuredWorks.length; i++) {
         featuredWorks[i].style.display = Display.HIDE;
     }
-};
-const getPaginationHtml = (pageNum) => `<div class="works-pagination" pageNum="${pageNum}"></div>`;
-const animateGoToWork = (currentIndex, targetIndex, featuredWorks) => __awaiter(void 0, void 0, void 0, function* () {
-    const diff = targetIndex - currentIndex;
-    if (diff === 0) {
-        return;
-    }
-    const isSlideLeft = diff > 0;
-    const hasIntermediateSteps = Math.abs(diff) > 1;
-    const indexBeforeTargetIndex = isSlideLeft ? targetIndex - 1 : targetIndex + 1;
-    const FINAL_DELAY = 1;
-    const finalSlider = new Slider(FINAL_DELAY, isSlideLeft, indexBeforeTargetIndex, 1, featuredWorks.length);
-    const finalMoveFromTo = finalSlider.move();
-    const finalMoveFromWork = featuredWorks[finalMoveFromTo.from];
-    const finalMoveToWork = featuredWorks[finalMoveFromTo.to];
-    const INTERMEDIATE_DELAY = 0.1;
-    if (hasIntermediateSteps) {
-        const intermediateSteps = Math.abs(diff) - 1;
-        const intermediateSlider = new Slider(INTERMEDIATE_DELAY, isSlideLeft, currentIndex, intermediateSteps, featuredWorks.length);
-        let moveFromTo = intermediateSlider.move();
-        let currMoveFromWork = featuredWorks[moveFromTo.from];
-        let currMoveToWork = featuredWorks[moveFromTo.to];
-        let animations = [];
-        changeDispAndAnimation(currMoveFromWork, Display.SHOW, intermediateSlider.sliderComponent.hide);
-        for (let i = 0; i < intermediateSteps; i++) {
-            animations.push(showNextWorkPromiseFactory(currMoveFromWork, currMoveToWork, intermediateSlider));
-            moveFromTo = intermediateSlider.move();
-            currMoveFromWork = featuredWorks[moveFromTo.from];
-            currMoveToWork = featuredWorks[moveFromTo.to];
-            animations.push(hideCurrentWorkPromiseFactory(currMoveFromWork, intermediateSlider));
+}
+/** Animates go to work event (i.e. change of work shown). */
+function animateGoToWork(currentIndex, targetIndex, featuredWorks) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const diff = targetIndex - currentIndex;
+        if (diff === 0) {
+            return;
         }
-        yield animations.reduce((p, f) => p.then(f), Promise.resolve());
-    }
-    else {
-        changeDispAndAnimation(finalMoveFromWork, Display.SHOW, finalSlider.sliderComponent.hide);
-    }
-    setTimeout(() => {
-        changeDispAndAnimation(finalMoveFromWork, Display.HIDE, 'none');
-        changeDispAndAnimation(finalMoveToWork, Display.SHOW, finalSlider.sliderComponent.show);
-    }, toMilliseconds(hasIntermediateSteps ? INTERMEDIATE_DELAY : finalSlider.animationDuration / 2));
-});
+        const isSlideLeft = diff > 0;
+        const hasIntermediateSteps = Math.abs(diff) > 1;
+        const indexBeforeTargetIndex = isSlideLeft ? targetIndex - 1 : targetIndex + 1;
+        const FINAL_DELAY = 1;
+        const finalSlider = new Slider(FINAL_DELAY, isSlideLeft, indexBeforeTargetIndex, 1, featuredWorks.length);
+        const finalMoveFromTo = finalSlider.move();
+        const finalMoveFromWork = featuredWorks[finalMoveFromTo.from];
+        const finalMoveToWork = featuredWorks[finalMoveFromTo.to];
+        const INTERMEDIATE_DELAY = 0.1;
+        if (hasIntermediateSteps) {
+            const intermediateSteps = Math.abs(diff) - 1;
+            const intermediateSlider = new Slider(INTERMEDIATE_DELAY, isSlideLeft, currentIndex, intermediateSteps, featuredWorks.length);
+            let moveFromTo = intermediateSlider.move();
+            let currMoveFromWork = featuredWorks[moveFromTo.from];
+            let currMoveToWork = featuredWorks[moveFromTo.to];
+            let animations = [];
+            changeDispAndAnimation(currMoveFromWork, Display.SHOW, intermediateSlider.sliderComponent.hide);
+            for (let i = 0; i < intermediateSteps; i++) {
+                animations.push(showNextWorkPromiseFactory(currMoveFromWork, currMoveToWork, intermediateSlider));
+                moveFromTo = intermediateSlider.move();
+                currMoveFromWork = featuredWorks[moveFromTo.from];
+                currMoveToWork = featuredWorks[moveFromTo.to];
+                animations.push(hideCurrentWorkPromiseFactory(currMoveFromWork, intermediateSlider));
+            }
+            yield animations.reduce((p, f) => p.then(f), Promise.resolve());
+        }
+        else {
+            changeDispAndAnimation(finalMoveFromWork, Display.SHOW, finalSlider.sliderComponent.hide);
+        }
+        setTimeout(() => {
+            changeDispAndAnimation(finalMoveFromWork, Display.HIDE, 'none');
+            changeDispAndAnimation(finalMoveToWork, Display.SHOW, finalSlider.sliderComponent.show);
+        }, toMilliseconds(hasIntermediateSteps ? INTERMEDIATE_DELAY : finalSlider.animationDuration / 2));
+    });
+}
 var Movement;
 (function (Movement) {
     Movement["LEFT_OUT"] = "leftout";
