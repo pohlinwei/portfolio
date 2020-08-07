@@ -494,7 +494,7 @@ footer > p {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 1rem;
   text-align: center;
-  animation: blinker 1s linear infinite;
+  animation: blinker 0.8s linear infinite;
 }
 
 @keyframes spin {
