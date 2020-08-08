@@ -1,5 +1,5 @@
 "use strict";
-const PARENT_DIR = 'https://pohlinwei.github.io/portfolio/';
+const PARENT_DIR = 'https://pohlinwei.github.io/';
 window.onload = () => {
     fetch(PARENT_DIR + 'projects/featured_works.json')
         .then(response => response.json())
