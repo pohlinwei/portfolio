@@ -16,7 +16,7 @@ window.onload = () => {
         setupActionAnimation();
         setupDropdownMenu();
         setupForm();
-        setTimeout(hideLoaderShowContent, 1000); // delay at least 1s
+        setTimeout(hideLoaderShowContent, 500); // delay at least 0.5s
       }) 
 }
 
@@ -43,5 +43,5 @@ function hideLoaderShowContent() {
     for (let i = 0; i < footer.length; i++) {
       footer[i].style.display = Display.SHOW;
     }
-  }, 3000); // duration should be synchronised with fade-out's 
+  }, 2000); // duration should be synchronised with fade-out's 
 }
