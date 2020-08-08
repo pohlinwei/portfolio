@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Lin Wei </title>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="lR6J8hw7Qifc7h0tAkJKtMueHx7YnwiiavnUc0lhiJw" />
+</head>
+<body>
+    <!--Navbar-->
+    <nav class="toggle">
+        <div id="logo"><a href="#home"><img src="vectors/logo.svg"/></a></div>
+        <div id="menu"><i class="fas fa-bars fa-2x"></i></div>
+        <ul id="nav-elements">
+            <li><a id="home-button" href="#home">Home</a></li>
+            <li><a href="#work" class="button">Work</a></li>
+            <li><a href="#about" class="button">About</a></li>
+            <li><a href="#connect" class="button">Connect</a></li>
+        </ul>
+    </nav>
+    <!--Menu-->
+    <div class="hidden" id="dropdown-menu">
+        <div id="menu-close" ><img src="vectors/close.svg"/></div>
+        <ul id="nav-elements-small">
+            <li><a href="#home" id="home-small">Home <i class="fas fa-home"></i></a></li>
+            <li><a href="#work" class="button">Work <i class="fas fa-address-card"></i></a></li>
+            <li><a href="#about" class="button">About <i class="fas fa-info-circle"></i></a></li>
+            <li><a href="#connect" class="button">Connect <i class="fas fa-project-diagram"></i></a></li>
+        </ul>
+    </div>
+    <!--Greetings/Welcome-->
+    <div id="home-div" class="toggle"> 
+        <div id="greeting">
+            <p>Hi<span id="blink">|</span></p>
+        </div>
+        <div id="intro">
+            <p>I am <strong>Lin Wei</strong>, </p>
+            <p>A <strong>programmer</strong>, <strong>music</strong> enthusiast, <strong>math</strong>  geek, 
+                <strong>physics</strong> lover, </p>
+            <p>And an <strong><span class="underline">aspiring creative coder</span></strong>.</p>
+        </div>
+    </div>
+    <!--Work/Porject showcase-->
+    <div id="work-div" class="content toggle">
+        <div class="header">
+            <h1>Featured Work</h1>
+        </div>
+        <div id="projects">
+            <div class="project">
+                <div class="project-name"><p>Theme: Adventure</p></div>
+                <div class="summary">
+                    <p>Tumblr Theme</p>
+                    <p>Done: Winter'16</p>
+                </div>
+            </div>
+            <div class="project">
+                <div class="project-name"><p>Zeitraum</p></div>
+                <div class="summary">
+                    <p>Productivity Web App</p>
+                    <p>Done: Summer'18</p>
+                </div>
+            </div>
+            <div class="project">
+                <div class="project-name"><p>ACom- Pianist</p></div>
+                <div class="summary">
+                    <p>Music Generator</p>
+                    <p>Done: Summer'19</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Description of Projects-->
+    <div class="description hidden">
+        <div class="close" ><img src="vectors/close.svg"/></div>
+        <div class="label"><img src="vectors/logo_big.svg"/></div>
+        <div class="intro"></div>
+    </div>
+    <div class="description hidden">
+        <div class="close" ><img src="vectors/close.svg"/></div>
+        <div class="label"><img src="vectors/logo_big.svg"/></div>
+        <div class="intro"></div>
+    </div>
+    <div class="description hidden">
+        <div class="close" ><img src="vectors/close.svg"/></div>
+        <div class="label"><img src="vectors/logo_big.svg"/></div>
+        <div class="intro"></div>
+    </div>
+    <!--About-->
+    <div id="about-div" class="content toggle">
+        <div class="header">
+            <h1>About</h1>
+        </div>
+        <div>
+            <p>I am a second-year Computer Science major, and my main area of interest lies in the 
+                intersection between machine intelligence and the arts. <span class="explanation">
+                Through the lens of math and physics, I have discovered profound beauty in the universe. 
+                In turn, I became intrigued by the possibility of harnessing the power of equations, data 
+                and/or logic to create art, and encapsulating their beauty in works of art. In this process, 
+                I hope to explore and push the boundaries of the definiton of beauty.</span>
+            </p>
+            <p>
+                Programming languages which I am familiar with include Typescript, Javascript, Python and Java.
+            </p>
+            <p>
+                I speak English, Chinese and German (CEFR level: B1).
+            </p>
+        </div>
+    </div>
+    <!--Connect-->
+    <div id="connect-div" class="content toggle">
+        <div class="header">
+            <h1>Connect</h1>
+        </div>
+        <div>
+            <div><a href="https://www.behance.net/linwei2"><i class="fab fa-behance fa-10x"></i></a></div>
+            <div><a href="https://github.com/pohlinwei"><i class="fab fa-github fa-10x"></i></a></div>
+        </div>
+    </div>
+    <footer> <p>© Copyright 2019 Poh Lin Wei. All rights reserved.</p></footer>
+    <script src="bundle.js" type="text/javascript"></script>
+</body>
+</html>
